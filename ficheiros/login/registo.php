@@ -433,29 +433,6 @@ require_once "../db_connect.php";
                             
                             <button type="submit" class="btn btn-primary py-3 animate__animated animate__pulse">Criar conta</button>
                         </form>
-                        
-                        <div class="auth-divider mt-4 mb-4">
-                            <span>Ou registe-se com</span>
-                        </div>
-                        
-                        <div class="social-login row">
-                            <div class="col-md-6 mb-2 mb-md-0">
-                                <a href="#" class="btn btn-light w-100 py-2">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Google" width="20" height="20">
-                                    Google
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="#" class="btn btn-light w-100 py-2">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1667px-Apple_logo_black.svg.png" alt="Apple" width="18" height="18">
-                                    Apple
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <p class="text-center mt-4">
-                            Já tem uma conta? <a href="login.php" class="login-link">Iniciar sessão</a>
-                        </p>
                     </div>
                 </div>
             </div>
