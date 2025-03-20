@@ -433,6 +433,9 @@ require_once "../db_connect.php";
                             
                             <button type="submit" class="btn btn-primary py-3 animate__animated animate__pulse">Criar conta</button>
                         </form>
+                        <p class="text-center mt-4">
+                            Já tem uma conta? <a href="login.php" class="login-link">Iniciar sessão</a>
+                        </p>
                     </div>
                 </div>
             </div>
