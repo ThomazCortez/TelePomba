@@ -450,19 +450,45 @@ require_once "../db_connect.php";
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nomeUtilizador = htmlspecialchars($_POST["nomeUtilizador"]);
             $email = htmlspecialchars($_POST["email"]);
-            $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+            $password = $_POST["password"];
             
-            try {
-                $stmt = $conn->prepare("INSERT INTO utilizadores (nome_utilizador, email, palavra_passe) VALUES (:name, :email, :password)");
-                $stmt->bindParam(":name", $nomeUtilizador);
-                $stmt->bindParam(":email", $email);
-                $stmt->bindParam(":password", $password);
-                $stmt->execute();
+            // Verificar se a senha tem pelo menos 8 caracteres
+            if (strlen($password) < 8) {
+                echo "showAlert('danger', 'A palavra-passe deve ter pelo menos 8 caracteres');";
+            } else {
+                // Verificar se o nome de utilizador já existe
+                $checkUsername = $conn->prepare("SELECT COUNT(*) FROM utilizadores WHERE nome_utilizador = :username");
+                $checkUsername->bindParam(":username", $nomeUtilizador);
+                $checkUsername->execute();
+                $usernameExists = $checkUsername->fetchColumn();
                 
-                echo "showAlert('success', 'Registo bem-sucedido! A redirecionar para o login...');";
-                echo "setTimeout(() => { window.location.href = 'login.php'; }, 3000);";
-            } catch (PDOException $e) {
-                echo "showAlert('danger', 'Erro: " . addslashes($e->getMessage()) . "');";
+                // Verificar se o email já existe
+                $checkEmail = $conn->prepare("SELECT COUNT(*) FROM utilizadores WHERE email = :email");
+                $checkEmail->bindParam(":email", $email);
+                $checkEmail->execute();
+                $emailExists = $checkEmail->fetchColumn();
+                
+                if ($usernameExists > 0) {
+                    echo "showAlert('danger', 'Este nome de utilizador já está em uso. Por favor, escolha outro.');";
+                } else if ($emailExists > 0) {
+                    echo "showAlert('danger', 'Este email já está registado. Por favor, use outro email ou faça login.');";
+                } else {
+                    // Continuar com o registo se ambos forem únicos
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                    
+                    try {
+                        $stmt = $conn->prepare("INSERT INTO utilizadores (nome_utilizador, email, palavra_passe) VALUES (:name, :email, :password)");
+                        $stmt->bindParam(":name", $nomeUtilizador);
+                        $stmt->bindParam(":email", $email);
+                        $stmt->bindParam(":password", $hashedPassword);
+                        $stmt->execute();
+                        
+                        echo "showAlert('success', 'Registo bem-sucedido! A redirecionar para o login...');";
+                        echo "setTimeout(() => { window.location.href = 'login.php'; }, 3000);";
+                    } catch (PDOException $e) {
+                        echo "showAlert('danger', 'Erro: " . addslashes($e->getMessage()) . "');";
+                    }
+                }
             }
         }
         ?>
@@ -601,16 +627,6 @@ require_once "../db_connect.php";
         
         document.querySelector('.btn-primary').addEventListener('mouseleave', function() {
             this.classList.remove('animate__pulse');
-        });
-        
-        // Adiciona validação de formulário
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function(event) {
-            const password = document.getElementById('password').value;
-            if (password.length < 8) {
-                event.preventDefault();
-                showAlert('danger', 'A palavra-passe deve ter pelo menos 8 caracteres');
-            }
         });
     </script>
 </body>
