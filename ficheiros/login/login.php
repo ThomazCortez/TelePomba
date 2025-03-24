@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["user_name"] = $user["nome_utilizador"];
             
             // Redirecionar para o dashboard
-            header("Location: dashboard.php");
+            header("Location: ../dashboard/dashboard.php");
             exit(); // Importante adicionar exit após o redirecionamento
         } else {
             // Palavra-passe incorreta
