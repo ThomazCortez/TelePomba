@@ -207,12 +207,12 @@ require_once "../db_connect.php";
         .auth-divider::before, .auth-divider::after {
             content: "";
             display: inline-block;
-            width: 30%;
+            width: 30%; /* Ajustado para 30% para deixar mais espaço para o texto */
             height: 1px;
             background: #c5e1d3;
             position: absolute;
             top: 50%;
-        }   
+        }
 
         .auth-divider::before {
             left: 0;
@@ -249,14 +249,14 @@ require_once "../db_connect.php";
             color: #2a7d5a;
         }
 
-        .register-link {
+        .login-link {
             color: #2a7d5a;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
-        .register-link:hover {
+        .login-link:hover {
             color: #1e5b40;
             text-decoration: underline;
         }
@@ -326,21 +326,6 @@ require_once "../db_connect.php";
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
 
-        .forgot-password {
-            display: block;
-            text-align: right;
-            margin-bottom: 20px;
-            color: #2a7d5a;
-            font-size: 14px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .forgot-password:hover {
-            color: #1e5b40;
-            text-decoration: underline;
-        }
-
         /* Responsive adjustments */
         @media (max-width: 767.98px) {
             .card-row {
@@ -390,22 +375,22 @@ require_once "../db_connect.php";
                         <div class="carousel-item active animate__animated animate__fadeIn">
                             <img src="https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000" alt="Slide 1">
                             <div class="carousel-caption">
-                                <h2 class="animate__animated animate__fadeIn">Bem-vindo de volta!<br>Sentimos a sua falta</h2>
-                                <p class="animate__animated animate__fadeIn animate__delay-1s">Entre na sua conta para continuar a partilhar momentos com quem mais importa.</p>
+                                <h2 class="animate__animated animate__fadeIn">Conecte-se com amigos,<br>compartilhe momentos</h2>
+                                <p class="animate__animated animate__fadeIn animate__delay-1s">Envie mensagens, crie grupos e mantenha-se próximo de quem mais importa.</p>
                             </div>
                         </div>
                         <div class="carousel-item animate__animated">
                             <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1000" alt="Slide 2">
                             <div class="carousel-caption">
-                                <h2 class="animate__animated">Mantenha-se conectado,<br>onde quer que esteja</h2>
-                                <p class="animate__animated animate__delay-1s">Acompanhe as últimas atualizações dos seus amigos e familia.</p>
+                                <h2 class="animate__animated">Compartilhe ideias,<br>crie conexões</h2>
+                                <p class="animate__animated animate__delay-1s">Partilhe pensamentos, fotos e vídeos com a sua comunidade.</p>
                             </div>
                         </div>
                         <div class="carousel-item animate__animated">
                             <img src="https://images.unsplash.com/photo-1554080353-a576cf803bda?q=80&w=1000" alt="Slide 3">
                             <div class="carousel-caption">
-                                <h2 class="animate__animated">De volta à comunidade,<br>de volta às histórias</h2>
-                                <p class="animate__animated animate__delay-1s">As suas conversas e memórias estão à sua espera no TelePomba.</p>
+                                <h2 class="animate__animated">Inspire e seja inspirado,<br>todos os dias</h2>
+                                <p class="animate__animated animate__delay-1s">Descubra novas histórias e mantenha-se conectado com o mundo.</p>
                             </div>
                         </div>
                     </div>
@@ -420,15 +405,15 @@ require_once "../db_connect.php";
                 <div class="col-md-6">
                     <div class="form-container">
                         <h2 class="form-title">Iniciar Sessão</h2>
-                        <p class="form-subtitle">Bem-vindo de volta! Entre com os seus dados para continuar</p>
+                        <p class="form-subtitle">Bem-vindo de volta! Por favor, insira os seus dados para continuar.</p>
                         
                         <form method="POST" class="mt-4">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="username" name="nomeUtilizador" placeholder="Nome de utilizador ou email" required>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Nome de utilizador ou email" required>
                                 <label for="username">Nome de utilizador ou email</label>
                             </div>
                             
-                            <div class="form-floating mb-3 password-container">
+                            <div class="form-floating mb-4 password-container">
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Palavra-passe" required>
                                 <label for="password">Palavra-passe</label>
                                 <span class="toggle-password" onclick="togglePassword()">
@@ -436,13 +421,10 @@ require_once "../db_connect.php";
                                 </span>
                             </div>
                             
-                            <a href="#" class="forgot-password">Esqueceu a sua palavra-passe?</a>
-                            
-                            <button type="submit" class="btn btn-primary py-3 animate__animated animate__pulse">Iniciar sessão</button>
+                            <button type="submit" class="btn btn-primary py-3 animate__animated animate__pulse">Iniciar Sessão</button>
                         </form>
-                        
-                        <p class="text-center mt-2">
-                            Não tem uma conta? <a href="registo.php" class="register-link">Regista-se</a>
+                        <p class="text-center mt-4">
+                            Não tem uma conta? <a href="registo.php" class="login-link">Criar conta</a>
                         </p>
                     </div>
                 </div>
@@ -456,39 +438,30 @@ require_once "../db_connect.php";
         // PHP para processar o formulário e mostrar alertas
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $nomeUtilizador = htmlspecialchars($_POST["nomeUtilizador"]);
+            $usernameOrEmail = htmlspecialchars($_POST["username"]);
             $password = $_POST["password"];
-            
-            // Verificar se o input é email ou nome de utilizador
-            if (filter_var($nomeUtilizador, FILTER_VALIDATE_EMAIL)) {
-                // Se for email
-                $stmt = $conn->prepare("SELECT id, nome_utilizador, palavra_passe FROM utilizadores WHERE email = :email");
-                $stmt->bindParam(":email", $nomeUtilizador);
-            } else {
-                // Se for nome de utilizador
-                $stmt = $conn->prepare("SELECT id, nome_utilizador, palavra_passe FROM utilizadores WHERE nome_utilizador = :username");
-                $stmt->bindParam(":username", $nomeUtilizador);
-            }
-            
+
+            // Verificar se o nome de utilizador ou email existe
+            $stmt = $conn->prepare("SELECT * FROM utilizadores WHERE nome_utilizador = :username OR email = :email");
+            $stmt->bindParam(":username", $usernameOrEmail);
+            $stmt->bindParam(":email", $usernameOrEmail);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            
+
             if ($user) {
-                // Verificar se a senha está correta
+                // Verificar a palavra-passe
                 if (password_verify($password, $user["palavra_passe"])) {
                     // Login bem-sucedido
                     $_SESSION["user_id"] = $user["id"];
-                    $_SESSION["username"] = $user["nome_utilizador"];
-                    
-                    echo "showAlert('success', 'Login bem-sucedido! A redirecionar...');";
-                    echo "setTimeout(() => { window.location.href = '../index.php'; }, 2000);";
+                    echo "showAlert('success', 'Login bem-sucedido! A redirecionar para o dashboard...');";
+                    echo "setTimeout(() => { window.location.href = 'dashboard.php'; }, 3000);";
                 } else {
-                    // Senha incorreta
+                    // Palavra-passe incorreta
                     echo "showAlert('danger', 'Palavra-passe incorreta. Por favor, tente novamente.');";
                 }
             } else {
-                // Utilizador não encontrado
-                echo "showAlert('danger', 'Utilizador não encontrado. Verifique se introduziu o nome ou email correto.');";
+                // Nome de utilizador ou email não existe
+                echo "showAlert('danger', 'Nome de utilizador ou email não encontrado. Por favor, verifique os dados inseridos.');";
             }
         }
         ?>
@@ -536,16 +509,16 @@ require_once "../db_connect.php";
 
         const slideTexts = [
             {
-                title: "Bem-vindo de volta!<br>Sentimos a sua falta",
-                description: "Entre na sua conta para continuar a partilhar momentos com quem mais importa."
+                title: "Conecte-se com amigos,<br>compartilhe momentos",
+                description: "Envie mensagens, crie grupos e mantenha-se próximo de quem mais importa."
             },
             {
-                title: "Mantenha-se conectado,<br>onde quer que esteja",
-                description: "Acompanhe as últimas atualizações dos seus amigos e familia."
+                title: "Compartilhe ideias,<br>crie conexões",
+                description: "Partilhe pensamentos, fotos e vídeos com a sua comunidade."
             },
             {
-                title: "De volta à comunidade,<br>de volta às histórias",
-                description: "As suas conversas e memórias estão à sua espera no TelePomba."
+                title: "Inspire e seja inspirado,<br>todos os dias",
+                description: "Descubra novas histórias e mantenha-se conectado com o mundo."
             }
         ];
 

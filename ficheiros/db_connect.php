@@ -1,6 +1,6 @@
 <?php
 
-$servername = "127.0.0.1";
+$servername = "localhost";
 $username = "root"; // Altere conforme necessário
 $password = ""; // Altere conforme necessário
 $database = "telepomba";
