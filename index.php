@@ -17,10 +17,11 @@
             --accent-color: #ff6b6b;
             --text-color: #333;
             --light-text: #fff;
+            --light-gray-bg: #f8f9fa;
         }
         
         html {
-            scroll-snap-type: y mandatory;
+            scroll-snap-type: y proximity;
             scroll-behavior: smooth;
         }
         
@@ -31,12 +32,46 @@
             align-items: center;
             justify-content: center;
             padding: 50px 0;
+            position: relative;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Alternar fundos para seções normais */
+        section:not(.hero):not(.hero-bg):nth-child(even) {
+            background-color: white;
+        }
+        
+        section:not(.hero):not(.hero-bg):nth-child(odd) {
+            background-color: var(--light-gray-bg);
+        }
+
+        /* Hover effects for client and team cards */
+        .team-card, 
+        .client-card,
+        .scrum-master-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-card:hover,
+        .client-card:hover,
+        .scrum-master-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        footer {
+            scroll-snap-align: start;
+        }
+
+        /* Background image styles for hero and CTA sections */
+        .hero,
+        .bg-primary.text-white {
+            position: relative;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-color);
-            background-color: #f8f9fa;
         }
         
         .navbar {
@@ -143,6 +178,187 @@
             border-radius: 50%;
             margin: 0 auto;
         }
+
+        .hero {
+        position: relative;
+        color: var(--light-text);
+    }
+
+    .hero, .hero-bg {
+        position: relative;
+        color: var(--light-text);
+    }
+
+    .hero::before, .hero-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.7;
+        z-index: -1;
+    }
+
+    .hero::before {
+        background-image: url('ficheiros/media/index/green.jpg');
+    }
+
+    .hero-bg::before {
+        background-image: url('ficheiros/media/index/blue2.jpg');
+    }
+
+    footer {
+    margin-top: auto;
+    background:linear-gradient(90deg, #1abc9c, #16a085);
+    color: white;
+    padding: 40px 20px;
+    box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    padding: 15px;
+}
+
+.footer-section h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.footer-section h4 {
+    color: #ecf0f1;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 5px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+    justify-content: center; /* Centraliza os ícones horizontalmente */
+}
+
+.social-icons a {
+    color: white;
+    font-size: 24px;
+    transition: transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.legal-links {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.legal-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.legal-links a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+    
+    .legal-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Classe para elementos que devem ser animados */
+.animate-on-scroll {
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Classes de animação específicas */
+.animate-fadeIn {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.animate-fadeIn.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-fadeInLeft {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.animate-fadeInLeft.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.animate-fadeInRight {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.animate-fadeInRight.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.animate-fadeInUp {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.animate-fadeInUp.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-delay-1 {
+    transition-delay: 0.2s;
+}
+
+.animate-delay-2 {
+    transition-delay: 0.4s;
+}
+
+.animate-delay-3 {
+    transition-delay: 0.6s;
+}
     </style>
 </head>
 <body>
@@ -188,7 +404,7 @@
     <section id="home" class="hero">
         <div class="container text-center">
             <div class="row justify-content-center">
-                <div class="col-md-10 animate__animated animate__fadeIn">
+                <div class="col-md-10 animate-on-scroll animate-fadeIn">
                     <h1 class="display-4 fw-bold mb-4">Bem-vindo ao TelePomba</h1>
                     <p class="lead mb-5">Conecte-se com amigos, crie grupos e mantenha-se próximo de quem mais importa.</p>
                     <div class="d-flex justify-content-center gap-3">
@@ -201,10 +417,10 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="bg-light">
+    <section id="about">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8 text-center animate__animated animate__fadeInUp">
+                <div class="col-md-8 text-center animate-on-scroll animate-fadeInUp">
                     <h2 class="section-title">O que é o TelePomba?</h2>
                     <p class="lead mb-5">
                         O TelePomba é uma plataforma de mensagens instantâneas que permite conectar-se com amigos e familiares de forma simples e segura. Envie mensagens, partilhe momentos especiais, crie grupos e mantenha-se próximo das pessoas que mais importam para si.
@@ -212,21 +428,21 @@
                 </div>
             </div>
             <div class="row g-4">
-                <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <div class="col-md-4 animate-on-scroll animate-fadeInUp animate-delay-1">
                     <div class="text-center">
                         <i class="fas fa-comments feature-icon"></i>
                         <h4>Conversas Privadas</h4>
                         <p>Conversas encriptadas de ponta a ponta para garantir a sua privacidade em todos os momentos.</p>
                     </div>
                 </div>
-                <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                <div class="col-md-4 animate-on-scroll animate-fadeInUp animate-delay-2">
                     <div class="text-center">
                         <i class="fas fa-users feature-icon"></i>
                         <h4>Grupos Personalizados</h4>
                         <p>Crie grupos com até 1000 membros e organize eventos, partilhe ficheiros e coordene atividades.</p>
                     </div>
                 </div>
-                <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
+                <div class="col-md-4 animate-on-scroll animate-fadeInUp animate-delay-3">
                     <div class="text-center">
                         <i class="fas fa-photo-video feature-icon"></i>
                         <h4>Partilha de Media</h4>
@@ -241,10 +457,10 @@
     <section id="features">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-6 animate__animated animate__fadeInLeft">
+                <div class="col-md-6 animate-on-scroll animate-fadeInLeft">
                     <img src="ficheiros/media/index/logo_telepomba.png" alt="TelePomba App" class="feature-img rounded shadow-lg" width="400" height="300">
                 </div>
-                <div class="col-md-6 animate__animated animate__fadeInRight">
+                <div class="col-md-6 animate-on-scroll animate-fadeInRight">
                     <h2 class="section-title text-start">Porquê usar o TelePomba?</h2>
                     <div class="d-flex align-items-start mb-4">
                         <div class="me-3">
@@ -288,16 +504,16 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="bg-light">
+    <section id="testimonials">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8 text-center animate__animated animate__fadeInUp">
+                <div class="col-md-8 text-center animate-on-scroll animate-fadeInUp">
                     <h2 class="section-title">Os Nossos Clientes Satisfeitos</h2>
                     <p class="lead mb-5">Veja o que os utilizadores do TelePomba têm a dizer sobre a nossa plataforma.</p>
                 </div>
             </div>
             <div class="row g-4">
-                <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <div class="col-md-4 animate-on-scroll animate-fadeInUp animate-delay-1">
                     <div class="client-card">
                         <div class="rating">★★★★★</div>
                         <p class="fst-italic mb-4">"O TelePomba revolucionou a forma como comunico com os meus amigos e família. A interface é intuitiva e as funcionalidades são exactamente o que eu precisava!"</p>
@@ -310,7 +526,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                <div class="col-md-4 animate-on-scroll animate-fadeInUp animate-delay-2">
                     <div class="client-card">
                         <div class="rating">★★★★★</div>
                         <p class="fst-italic mb-4">"Como gestor de uma equipa remota, o TelePomba tornou-se essencial para o nosso trabalho diário. Os grupos e a partilha de ficheiros são excelentes!"</p>
@@ -323,7 +539,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
+                <div class="col-md-4 animate-on-scroll animate-fadeInUp animate-delay-3">
                     <div class="client-card">
                         <div class="rating">★★★★★</div>
                         <p class="fst-italic mb-4">"Adoro a segurança que o TelePomba oferece. Sinto-me confortável a partilhar informações pessoais sabendo que estão protegidas."</p>
@@ -341,187 +557,170 @@
     </section>
 
     <!-- Team Section -->
-    <section id="team">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 text-center animate__animated animate__fadeInUp">
-                    <h2 class="section-title">A Nossa Equipa</h2>
-                    <p class="lead mb-5">Conheça os talentosos profissionais por trás do TelePomba.</p>
-                </div>
+<section id="team">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center animate-on-scroll animate-fadeInUp">
+                <h2 class="section-title">A Nossa Equipa</h2>
+                <p class="lead mb-5">Conheça os talentosos profissionais por trás do TelePomba.</p>
             </div>
-            
-            <!-- Scrum Master (Maior) -->
-            <div class="row justify-content-center mb-5">
-                <div class="col-md-6 animate__animated animate__fadeInUp">
-                    <div class="card scrum-master-card text-center p-4">
-                        <img src="ficheiros/media/index/thomaz.png" class="scrum-master-img mb-3" alt="Scrum Master" width="200" height="200">
-                        <h3>Thomaz Cortez</h3>
-                        <p class="text-primary fw-bold">Scrum Master & Fundador</p>
-                        <p>Com 0 anos de experiência no desenvolvimento de plataformas de comunicação, Thomaz lidera a equipa do TelePomba com paixão e inovação.</p>
-                        <div class="d-flex justify-content-center gap-3 mt-3">
-                            <a href="https://github.com/ThomazCortez" class="text-primary"><i class="fab fa-github fs-4"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Desenvolvedores (10) -->
-            <div class="row g-4">
-                <!-- Desenvolvedor 1 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
-                    <div class="card team-card text-center p-3">
-                        <img src="ficheiros/media/index/marco.png" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Marco Neto</h5>
-                        <p class="text-primary">Co-Founder & Definições de Utilizador</p>
-                    </div>
-                </div>
-                
-                <!-- Desenvolvedor 2 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
-                    <div class="card team-card text-center p-3">
-                        <img src="/api/placeholder/150/150" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Miguel Duarte</h5>
-                        <p class="text-primary">Imagens</p>
-                    </div>
-                </div>
-                
-                <!-- Desenvolvedor 3 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
-                    <div class="card team-card text-center p-3">
-                        <img src="ficheiros/media/index/lourenco.png" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Lourenço Mestre</h5>
-                        <p class="text-primary">Footer & Base de Dados</p>
-                    </div>
-                </div>
-                
-                <!-- Desenvolvedor 4 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
-                    <div class="card team-card text-center p-3">
-                        <img src="ficheiros/media/index/martim.png" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Martim Marreiros</h5>
-                        <p class="text-primary">Definições de Utilizador</p>
-                    </div>
-                </div>
-                
-                <!-- Desenvolvedor 5 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
-                    <div class="card team-card text-center p-3">
-                        <img src="/api/placeholder/150/150" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Yathaarth</h5>
-                        <p class="text-primary">Index</p>
-                    </div>
-                </div>
-                
-                <!-- Desenvolvedor 6 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.7s">
-                    <div class="card team-card text-center p-3">
-                        <img src="/api/placeholder/150/150" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Gustavo Pomba</h5>
-                        <p class="text-primary">Login, Registo & Logout</p>
-                    </div>
-                </div>
-                
-                <!-- Desenvolvedor 7 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.8s">
-                    <div class="card team-card text-center p-3">
-                        <img src="/api/placeholder/150/150" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Gonçalo Dionísio</h5>
-                        <p class="text-primary">Header e Navbar</p>
-                    </div>
-                </div>
-                
-                <!-- Desenvolvedor 8 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.9s">
-                    <div class="card team-card text-center p-3">
-                        <img src="/api/placeholder/150/150" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Henrique</h5>
-                        <p class="text-primary">Base de Dados</p>
-                    </div>
-                </div>
-                
-                <!-- Desenvolvedor 9 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 1s">
-                    <div class="card team-card text-center p-3">
-                        <img src="/api/placeholder/150/150" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Rafael Costa</h5>
-                        <p class="text-primary">Logotípo & Imagens</p>
-                    </div>
-                </div>
-                
-                <!-- Desenvolvedor 10 -->
-                <div class="col-md-3 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 1.1s">
-                    <div class="card team-card text-center p-3">
-                        <img src="/api/placeholder/150/150" class="team-img mb-3" alt="Developer" width="150" height="150">
-                        <h5>Nicolas Almeida</h5>
-                        <p class="text-primary">Login, Registo e Logout</p>
+        </div>
+        
+        <!-- Scrum Master (Maior) -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-6 animate-on-scroll animate-fadeInUp">
+                <div class="card scrum-master-card text-center p-4">
+                    <img src="ficheiros/media/index/thomaz.png" class="scrum-master-img mb-3" alt="Scrum Master" width="200" height="200">
+                    <h3>Thomaz Cortez</h3>
+                    <p class="text-primary fw-bold">Scrum Master & Fundador</p>
+                    <p>Com 0 anos de experiência no desenvolvimento de plataformas de comunicação, Thomaz lidera a equipa do TelePomba com paixão e inovação.</p>
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <a href="https://github.com/ThomazCortez" class="text-primary"><i class="fab fa-github fs-4"></i></a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        
+        <!-- Desenvolvedores (10) -->
+        <div class="row g-4">
+            <!-- Desenvolvedor 1 -->
+            <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.2s">
+                <div class="card team-card text-center p-3">
+                    <img src="ficheiros/media/index/marco.png" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <h5>Marco Neto</h5>
+                    <p class="text-primary">Co-Founder & Definições de Utilizador</p>
+                </div>
+            </div>
+            
+            <!-- Desenvolvedor 2 -->
+            <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.3s">
+                <div class="card team-card text-center p-3">
+                    <img src="ficheiros/media/index/turma.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <h5>Miguel Duarte</h5>
+                    <p class="text-primary">Imagens</p>
+                </div>
+            </div>
+            
+            <!-- Desenvolvedor 3 -->
+            <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.4s">
+                <div class="card team-card text-center p-3">
+                    <img src="ficheiros/media/index/lourenco.png" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <h5>Lourenço Mestre</h5>
+                    <p class="text-primary">Footer & Base de Dados</p>
+                </div>
+            </div>
+            
+            <!-- Desenvolvedor 4 -->
+            <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.5s">
+                <div class="card team-card text-center p-3">
+                    <img src="ficheiros/media/index/martim.png" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <h5>Martim Marreiros</h5>
+                    <p class="text-primary">Definições de Utilizador</p>
+                </div>
+            </div>
+            
+            <!-- Desenvolvedor 5 -->
+            <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.6s">
+                <div class="card team-card text-center p-3">
+                    <img src="ficheiros/media/index/yat.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <h5>Yathaarth</h5>
+                    <p class="text-primary">Index</p>
+                </div>
+            </div>
+            
+            <!-- Desenvolvedor 6 -->
+            <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.7s">
+                <div class="card team-card text-center p-3">
+                    <img src="ficheiros/media/index/pomba.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <h5>Gustavo Pomba</h5>
+                    <p class="text-primary">Login, Registo & Logout</p>
+                </div>
+            </div>
+            
+            <!-- Desenvolvedor 7 -->
+            <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.8s">
+                <div class="card team-card text-center p-3">
+                    <img src="ficheiros/media/index/mega.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <h5>Gonçalo Dionísio</h5>
+                    <p class="text-primary">Header e Navbar</p>
+                </div>
+            </div>
+            
+            <!-- Desenvolvedor 8 -->
+            <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.9s">
+                <div class="card team-card text-center p-3">
+                    <img src="ficheiros/media/index/henrique.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <h5>Henrique</h5>
+                    <p class="text-primary">Base de Dados</p>
+                </div>
+            </div>
+            
+            <!-- Últimos 2 desenvolvedores centralizados com mais espaço -->
+<div class="w-100 d-flex justify-content-center flex-wrap mt-4">
+    <!-- Desenvolvedor 9 -->
+    <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp mx-md-4" style="animation-delay: 1s">
+        <div class="card team-card text-center p-3">
+            <img src="ficheiros/media/index/turma.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+            <h5>Rafael Costa</h5>
+            <p class="text-primary">Logotípo & Imagens</p>
+        </div>
+    </div>
+    
+    <!-- Desenvolvedor 10 -->
+    <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp mx-md-4" style="animation-delay: 1.1s">
+        <div class="card team-card text-center p-3">
+            <img src="ficheiros/media/index/nic.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+            <h5>Nicolas Almeida</h5>
+            <p class="text-primary">Login, Registo e Logout</p>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+</section>
 
     <!-- CTA Section -->
-    <section class="bg-primary text-white">
-        <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="col-md-8 animate__animated animate__fadeIn">
-                    <h2 class="mb-4">Pronto para começar?</h2>
-                    <p class="lead mb-5">Junte-se à nossa comunidade hoje e comece a partilhar os seus momentos.</p>
-                    <a href="/TelePomba/ficheiros/login/registo.php" class="btn btn-light btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite animate__slower">Criar Conta Gratuitamente</a>
-                </div>
+    <section class="hero-bg">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-md-8 animate-on-scroll animate-fadeIn">
+                <h2 class="mb-4">Pronto para começar?</h2>
+                <p class="lead mb-5">Junte-se à nossa comunidade hoje e comece a partilhar os seus momentos.</p>
+                <a href="/TelePomba/ficheiros/login/registo.php" class="btn btn-light btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite animate__slower">Criar Conta Gratuitamente</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <h4><i class="fas fa-dove me-2"></i> TelePomba</h4>
-                    <p>Conecte-se com amigos, compartilhe momentos e mantenha-se próximo de quem mais importa.</p>
-                </div>
-                <div class="col-md-2">
-                    <h5>Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white text-decoration-none">Início</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Sobre</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Recursos</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Equipa</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2">
-                    <h5>Suporte</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white text-decoration-none">FAQ</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Centro de Ajuda</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Contacto</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Mantenha-se Conectado</h5>
-                    <div class="d-flex gap-3 mb-3">
-                        <a href="#" class="text-white fs-4"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-white fs-4"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white fs-4"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white fs-4"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                    <p>Subscreva a nossa newsletter para receber as últimas novidades.</p>
-                    <div class="input-group">
-                        <input type="email" class="form-control" placeholder="Seu email">
-                        <button class="btn btn-light" type="button">Subscrever</button>
-                    </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Telepomba</h3>
+                <p>Conectando pombas e telecomunicações desde 2025</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📧 contato@telepomba.com</p>
+                <p>📞 (+351)939658201</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Redes Sociais</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
-            <hr class="my-4 bg-light">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; 2025 TelePomba. Todos os direitos reservados.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-white text-decoration-none me-3">Política de Privacidade</a>
-                    <a href="#" class="text-white text-decoration-none">Termos de Serviço</a>
-                </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Telepomba - Todos os direitos reservados</p>
+            <div class="legal-links">
+                <a href="#">Política de Privacidade</a>
+                <a href="#">Termos de Serviço</a>
             </div>
         </div>
     </footer>
@@ -532,34 +731,32 @@
     <script>
         // Animação ao Scroll
         document.addEventListener("DOMContentLoaded", function() {
-            const animateElements = document.querySelectorAll('.animate__animated');
-            
+            // Configuração do Intersection Observer
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        let element = entry.target;
-                        let animateClass = Array.from(element.classList).find(className => 
-                            className.startsWith('animate__') && className !== 'animate__animated'
-                        );
-                        
-                        if (animateClass && animateClass !== 'animate__infinite') {
-                            element.classList.add(animateClass);
-                            observer.unobserve(element);
-                        }
+                        // Animar elementos dentro da seção visível
+                        const animatableElements = entry.target.querySelectorAll('.animate-on-scroll');
+                        animatableElements.forEach(element => {
+                            element.classList.add('animated');
+                        });
                     }
                 });
             }, { threshold: 0.1 });
             
-            animateElements.forEach(element => {
-                let animateClass = Array.from(element.classList).find(className => 
-                    className.startsWith('animate__') && className !== 'animate__animated'
-                );
-                
-                if (animateClass && animateClass !== 'animate__infinite') {
-                    element.classList.remove(animateClass);
-                    observer.observe(element);
-                }
+            // Observar todas as seções
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
             });
+            
+            // Animar a primeira seção imediatamente (hero section)
+            const heroSection = document.querySelector('#home');
+            if (heroSection) {
+                const heroElements = heroSection.querySelectorAll('.animate-on-scroll');
+                heroElements.forEach(element => {
+                    element.classList.add('animated');
+                });
+            }
         });
     </script>
 </body>
