@@ -1,6 +1,39 @@
 <?php
 session_start();
 require_once "../db_connect.php";
+
+// Processar formulário de login
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $usernameOrEmail = htmlspecialchars($_POST["username"]);
+    $password = $_POST["password"];
+
+    // Verificar se o nome de utilizador ou email existe
+    $stmt = $conn->prepare("SELECT * FROM utilizadores WHERE nome_utilizador = :username OR email = :email");
+    $stmt->bindParam(":username", $usernameOrEmail);
+    $stmt->bindParam(":email", $usernameOrEmail);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        // Verificar a palavra-passe
+        if (password_verify($password, $user["palavra_passe"])) {
+            // Login bem-sucedido
+            $_SESSION["user_id"] = $user["id_utilizador"];
+            $_SESSION["user_name"] = $user["nome_utilizador"];
+            
+            // Redirecionar para o dashboard
+            header("Location: dashboard.php");
+            exit(); // Importante adicionar exit após o redirecionamento
+        } else {
+            // Palavra-passe incorreta
+            $_SESSION["login_error"] = "Palavra-passe incorreta. Por favor, tente novamente.";
+        }
+    } else {
+        // Nome de utilizador ou email não existe
+        $_SESSION["login_error"] = "Nome de utilizador ou email não encontrado. Por favor, verifique os dados inseridos.";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-PT">
@@ -435,37 +468,6 @@ require_once "../db_connect.php";
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // PHP para processar o formulário e mostrar alertas
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $usernameOrEmail = htmlspecialchars($_POST["username"]);
-            $password = $_POST["password"];
-
-            // Verificar se o nome de utilizador ou email existe
-            $stmt = $conn->prepare("SELECT * FROM utilizadores WHERE nome_utilizador = :username OR email = :email");
-            $stmt->bindParam(":username", $usernameOrEmail);
-            $stmt->bindParam(":email", $usernameOrEmail);
-            $stmt->execute();
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($user) {
-                // Verificar a palavra-passe
-                if (password_verify($password, $user["palavra_passe"])) {
-                    // Login bem-sucedido
-                    $_SESSION["user_id"] = $user["id"];
-                    echo "showAlert('success', 'Login bem-sucedido! A redirecionar para o dashboard...');";
-                    echo "setTimeout(() => { window.location.href = 'dashboard.php'; }, 3000);";
-                } else {
-                    // Palavra-passe incorreta
-                    echo "showAlert('danger', 'Palavra-passe incorreta. Por favor, tente novamente.');";
-                }
-            } else {
-                // Nome de utilizador ou email não existe
-                echo "showAlert('danger', 'Nome de utilizador ou email não encontrado. Por favor, verifique os dados inseridos.');";
-            }
-        }
-        ?>
-
         // Função para mostrar alertas
         function showAlert(type, message) {
             const alertContainer = document.getElementById('alertContainer');
@@ -500,7 +502,7 @@ require_once "../db_connect.php";
             }
         }
         
-        // Slide Images (Directly in HTML/CSS)
+        // Slide Images
         const slideImages = [
             "https://images.unsplash.com/photo-1547234935-80c7145ec969?q=80&w=1000",
             "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1000",
@@ -600,6 +602,14 @@ require_once "../db_connect.php";
         
         document.querySelector('.btn-primary').addEventListener('mouseleave', function() {
             this.classList.remove('animate__pulse');
+        });
+
+        // Mostrar mensagens de erro se existirem
+        document.addEventListener('DOMContentLoaded', function() {
+            <?php if (isset($_SESSION["login_error"])): ?>
+                showAlert('danger', '<?php echo $_SESSION["login_error"]; ?>');
+                <?php unset($_SESSION["login_error"]); ?>
+            <?php endif; ?>
         });
     </script>
 </body>
