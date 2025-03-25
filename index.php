@@ -212,7 +212,7 @@
 
     footer {
     margin-top: auto;
-    background:linear-gradient(90deg, #1abc9c, #16a085);
+    background:linear-gradient(90deg, #2a6b5f, #2a6b5f);
     color: white;
     padding: 40px 20px;
     box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.3);
@@ -234,7 +234,7 @@
 }
 
 .footer-section h3 {
-    color: #2c3e50;
+    color: #ecf0f1;
     margin-bottom: 15px;
 }
 
@@ -697,6 +697,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Telepomba</h3>
+            </a>
                 <p>Conectando pombas e telecomunicações desde 2025</p>
             </div>
             
