@@ -18,11 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verificar a palavra-passe
         if (password_verify($password, $user["palavra_passe"])) {
             // Login bem-sucedido
-            $_SESSION["user_id"] = $user["id_utilizador"];
+            $_SESSION["id_utilizador"] = $user["id_utilizador"];
             $_SESSION["user_name"] = $user["nome_utilizador"];
             
             // Redirecionar para o dashboard
-            header("Location: ../dashboard/dashboard.php");
+            header("Location: /TelePomba/ficheiros/dashboard/dashboard.php");
             exit(); // Importante adicionar exit após o redirecionamento
         } else {
             // Palavra-passe incorreta
