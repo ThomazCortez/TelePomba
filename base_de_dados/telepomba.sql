@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 25-Mar-2025 às 09:39
+-- Tempo de geração: 25-Mar-2025 às 09:43
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.2.0
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `utilizadores` (
   `nome_utilizador` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `palavra_passe` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `imagem_perfil` varchar(255) COLLATE utf8mb4_general_ci DEFAULT 'default.png',
+  `imagem_perfil` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'ficheiros/media/index/default.png',
   `descricao` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `estado` enum('online','ausente','ocupado','offline') COLLATE utf8mb4_general_ci DEFAULT 'offline',
   `ultima_atividade` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
