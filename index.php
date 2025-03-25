@@ -212,7 +212,7 @@
 
     footer {
     margin-top: auto;
-    background:linear-gradient(90deg, #1abc9c, #16a085);
+    background:linear-gradient(90deg, #2a6b5f, #2a6b5f);
     color: white;
     padding: 40px 20px;
     box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.3);
@@ -234,7 +234,7 @@
 }
 
 .footer-section h3 {
-    color: #2c3e50;
+    color: #ecf0f1;
     margin-bottom: 15px;
 }
 
@@ -623,7 +623,7 @@
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.6s">
                 <div class="card team-card text-center p-3">
                     <img src="ficheiros/media/index/yat.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
-                    <h5>Yathaarth</h5>
+                    <h5>Yathaarth Handa</h5>
                     <p class="text-primary">Index</p>
                 </div>
             </div>
@@ -650,7 +650,7 @@
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.9s">
                 <div class="card team-card text-center p-3">
                     <img src="ficheiros/media/index/henrique.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
-                    <h5>Henrique</h5>
+                    <h5>Henrique Domingos</h5>
                     <p class="text-primary">Base de Dados</p>
                 </div>
             </div>
@@ -697,6 +697,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Telepomba</h3>
+            </a>
                 <p>Conectando pombas e telecomunicações desde 2025</p>
             </div>
             
