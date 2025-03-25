@@ -595,7 +595,7 @@
             <!-- Desenvolvedor 2 -->
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.3s">
                 <div class="card team-card text-center p-3">
-                    <img src="ficheiros/media/index/turma.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <img src="ficheiros/media/index/miguel.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Miguel Duarte</h5>
                     <p class="text-primary">Imagens</p>
                 </div>
@@ -623,7 +623,7 @@
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.6s">
                 <div class="card team-card text-center p-3">
                     <img src="ficheiros/media/index/yat.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
-                    <h5>Yathaarth</h5>
+                    <h5>Yathaarth Handa</h5>
                     <p class="text-primary">Index</p>
                 </div>
             </div>
@@ -650,7 +650,7 @@
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.9s">
                 <div class="card team-card text-center p-3">
                     <img src="ficheiros/media/index/henrique.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
-                    <h5>Henrique</h5>
+                    <h5>Henrique Domingos</h5>
                     <p class="text-primary">Base de Dados</p>
                 </div>
             </div>
@@ -660,7 +660,7 @@
     <!-- Desenvolvedor 9 -->
     <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp mx-md-4" style="animation-delay: 1s">
         <div class="card team-card text-center p-3">
-            <img src="ficheiros/media/index/turma.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+            <img src="ficheiros/media/index/rafa.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
             <h5>Rafael Costa</h5>
             <p class="text-primary">Logotípo & Imagens</p>
         </div>
