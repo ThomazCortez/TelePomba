@@ -1,3 +1,4 @@
+<!-- Adicione isto antes do </body> -->
 <footer>
         <div class="footer-content">
             <div class="footer-section">

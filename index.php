@@ -59,7 +59,9 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
 
-
+        footer {
+            scroll-snap-align: start;
+        }
 
         /* Background image styles for hero and CTA sections */
         .hero,
@@ -209,28 +211,40 @@
     }
 
     footer {
-            margin-top: auto;
-            background: #2a6b5f;
-            color: white;
-            padding: 40px 20px;
-            box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.3);
-        }
+    margin-top: auto;
+    background:linear-gradient(90deg, #1abc9c, #16a085);
+    color: white;
+    padding: 40px 20px;
+    box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.3);
+}
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: space-between;
-        }
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-between;
+}
 
-        .footer-section {
-            flex: 1;
-            min-width: 250px;
-            padding: 15px;
-            text-align: center;
-        }
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    padding: 15px;
+}
+
+.footer-section h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.footer-section h4 {
+    color: #ecf0f1;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 5px;
+}
+
 .social-icons {
     display: flex;
     gap: 20px;
@@ -705,8 +719,8 @@
         <div class="footer-bottom">
             <p>&copy; 2025 Telepomba - Todos os direitos reservados</p>
             <div class="legal-links">
-                <a href="/Telepomba/politicaprivacidade.php">Política de Privacidade</a>
-                <a href="/Telepomba/termosservico.php">Termos de Serviço</a>
+                <a href="#">Política de Privacidade</a>
+                <a href="#">Termos de Serviço</a>
             </div>
         </div>
     </footer>
