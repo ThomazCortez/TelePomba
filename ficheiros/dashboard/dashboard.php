@@ -6,3 +6,4 @@ if (!isset($_SESSION['id_utilizador'])) {
     exit();
 }
 ?>
+<a href="perfil.php" class="login-link">teste</a>
