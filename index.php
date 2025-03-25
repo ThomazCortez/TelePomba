@@ -693,38 +693,7 @@
 </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Telepomba</h3>
-            </a>
-                <p>Conectando pombas e telecomunicações desde 2025</p>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Contacto</h4>
-                <p>📧 contato@telepomba.com</p>
-                <p>📞 (+351)939658201</p>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Redes Sociais</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 Telepomba - Todos os direitos reservados</p>
-            <div class="legal-links">
-                <a href="#">Política de Privacidade</a>
-                <a href="#">Termos de Serviço</a>
-            </div>
-        </div>
-    </footer>
+    <?php include 'ficheiros/includes/footer.php'; ?>
 
     <!-- Bootstrap JS with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
