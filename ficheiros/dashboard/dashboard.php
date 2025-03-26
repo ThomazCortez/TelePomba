@@ -59,9 +59,14 @@ if (!isset($_SESSION['id_utilizador'])) {
                 <div class="bg-light p-3 border-bottom">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Chats</h5>
-                        <button class="btn btn-sm btn-outline-secondary">
-                            <i class="bi bi-three-dots-vertical"></i>
-                        </button>
+                        <div>
+                            <a href="perfil.php" class="btn btn-sm btn-outline-primary me-1">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="mt-2">
                         <div class="input-group">
