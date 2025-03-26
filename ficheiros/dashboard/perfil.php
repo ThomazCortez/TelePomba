@@ -22,6 +22,17 @@ if ($conn->connect_error) {
 $error = [];
 $success = [];
 
+// Carregar dados atuais do utilizador
+$current_nome = '';
+$current_email = '';
+$current_descricao = '';
+$stmt = $conn->prepare("SELECT nome_utilizador, email, descricao FROM utilizadores WHERE id_utilizador = ?");
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$stmt->bind_result($current_nome, $current_email, $current_descricao);
+$stmt->fetch();
+$stmt->close();
+
 // Processar alteração de password
 if (isset($_POST['alterar_password'])) {
     $current_password = trim($_POST['current_password'] ?? '');
@@ -139,41 +150,26 @@ if (isset($_POST['alterar_email'])) {
     }
 }
 
-// Processar alteração de descrição
+// Processar alteração de descrição (NOVA SEÇÃO)
 if (isset($_POST['alterar_descricao'])) {
     $nova_descricao = trim($_POST['nova_descricao'] ?? '');
 
-    // Validação ajustada
-    if (strlen($nova_descricao) > 500) {
-        $error['descricao'] = "A descrição não pode exceder 500 caracteres!";
+    if (strlen($nova_descricao) > 1000) {
+        $error['descricao'] = "A descrição não pode exceder 1000 caracteres!";
     } else {
-        // Verifique se a coluna existe na tabela
-        $check_column = $conn->query("SHOW COLUMNS FROM utilizadores LIKE 'descricao'");
-        if ($check_column->num_rows == 0) {
-            // Se a coluna não existir, crie-a
-            $conn->query("ALTER TABLE utilizadores ADD COLUMN descricao TEXT");
-        }
-
         $stmt = $conn->prepare("UPDATE utilizadores SET descricao = ? WHERE id_utilizador = ?");
-        if ($stmt === false) {
-            $error['descricao'] = "Erro ao preparar a query: " . $conn->error;
-        } else {
-            $stmt->bind_param("si", $nova_descricao, $_SESSION['user_id']);
+        $stmt->bind_param("si", $nova_descricao, $_SESSION['user_id']);
 
-            if ($stmt->execute()) {
-                $success['descricao'] = "Descrição atualizada com sucesso!";
-            } else {
-                $error['descricao'] = "Erro ao atualizar: " . $stmt->error;
-            }
-            $stmt->close();
+        if ($stmt->execute()) {
+            $success['descricao'] = "Descrição atualizada com sucesso!";
+            $current_descricao = $nova_descricao;
+        } else {
+            $error['descricao'] = "Erro ao atualizar: " . $stmt->error;
         }
+        $stmt->close();
     }
 }
-
-$conn->close();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pt">
@@ -327,7 +323,8 @@ $conn->close();
             <button type="submit" name="alterar_password">Alterar Password</button>
         </form>
     </div>
-<!-- Alterar Descrição -->
+
+    <!-- Nova Seção: Alterar Descrição -->
     <div class="section">
         <h2>Alterar Descrição</h2>
         <?php if (isset($success['descricao'])): ?>
@@ -338,10 +335,14 @@ $conn->close();
         <?php endif; ?>
         <form method="post">
             <div class="form-group">
-                <label>Nova Descrição:</label>
-                <textarea name="nova_descricao" required minlength="3"></textarea>
+                <label>Sua Descrição:</label>
+                <textarea 
+                    name="nova_descricao" 
+                    maxlength="1000"
+                    placeholder="Escreva sobre você..."
+                ><?= htmlspecialchars($current_descricao) ?></textarea>
             </div>
-            <button type="submit" name="alterar_descricao">Alterar Descrição</button>
+            <button type="submit" name="alterar_descricao">Atualizar Descrição</button>
         </form>
     </div>
 </body>
