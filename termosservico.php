@@ -148,12 +148,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/TelePomba/index.php#home">Início</a>
                     </li>
-                    <li class="nav-item">
+                   <!-- <li class="nav-item">
                         <a class="nav-link" href="/TelePomba/index.php#about">Sobre</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/TelePomba/index.php#features">Recursos</a>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
                         <a class="nav-link btn btn-light text-primary py-1 px-3 ms-2" 
                            href="/TelePomba/ficheiros/login/login.php">Iniciar sessão</a>

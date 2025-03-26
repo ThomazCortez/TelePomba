@@ -25,8 +25,8 @@
         <div class="footer-bottom">
             <p>&copy; 2025 Telepomba - Todos os direitos reservados</p>
             <div class="legal-links">
-                <a href="#">Política de Privacidade</a>
-                <a href="#">Termos de Serviço</a>
+                <a href="politicaprivacidade.php">Política de Privacidade</a>
+                <a href="termosservico.php">Termos de Serviço</a>
             </div>
         </div>
     </footer>
