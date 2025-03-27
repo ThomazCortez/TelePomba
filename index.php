@@ -203,11 +203,11 @@
         }
 
         .hero::before {
-            background-image: url('ficheiros/media/index/green.jpg');
+            background-image: url('ficheiros/media/img/green.jpg');
         }
 
         .hero-bg::before {
-            background-image: url('ficheiros/media/index/blue2.jpg');
+            background-image: url('ficheiros/media/img/blue2.jpg');
         }
 
         footer {
@@ -390,10 +390,10 @@
                         <a class="nav-link" href="#team">Equipa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-light text-primary py-1 px-3 ms-2" href="/TelePomba/ficheiros/login/login.php">Iniciar sessão</a>
+                        <a class="nav-link btn btn-light text-primary py-1 px-3 ms-2" href="/TelePomba/utilizador/login.php">Iniciar sessão</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light py-1 px-3 ms-2" href="/TelePomba/ficheiros/login/registo.php">Criar conta</a>
+                        <a class="nav-link btn btn-outline-light py-1 px-3 ms-2" href="/TelePomba/utilizador/registo.php">Criar conta</a>
                     </li>
                 </ul>
             </div>
@@ -408,7 +408,7 @@
                     <h1 class="display-4 fw-bold mb-4">Bem-vindo ao TelePomba</h1>
                     <p class="lead mb-5">Junte-se a amigos, crie grupos e mantenha-se próximo de quem mais importa.</p>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="/TelePomba/ficheiros/login/registo.php" class="btn btn-light btn-lg px-4">Criar Conta</a>
+                        <a href="/TelePomba/utilizador/registo.php" class="btn btn-light btn-lg px-4">Criar Conta</a>
                         <a href="#about" class="btn btn-outline-light btn-lg px-4">Saiba Mais</a>
                     </div>
                 </div>
@@ -458,7 +458,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 animate-on-scroll animate-fadeInLeft">
-                    <img src="ficheiros/media/index/logo_telepomba.png" alt="TelePomba App" class="feature-img rounded shadow-lg" width="400" height="300">
+                    <img src="ficheiros/media/img/logo_telepomba.png" alt="TelePomba App" class="feature-img rounded shadow-lg" width="400" height="300">
                 </div>
                 <div class="col-md-6 animate-on-scroll animate-fadeInRight">
                     <h2 class="section-title text-start">Porquê usar o TelePomba?</h2>
@@ -518,7 +518,7 @@
                         <div class="rating">★★★★★</div>
                         <p class="fst-italic mb-4">"O TelePomba revolucionou a forma como me comunico com os meus amigos e família. A interface é intuitiva e as funcionalidades são exatamente o que eu precisava!"</p>
                         <div class="d-flex align-items-center">
-                            <img src="ficheiros/media/index/odete.jpg" alt="Client" class="client-img me-3" width="60" height="60">
+                            <img src="ficheiros/media/img/odete.jpg" alt="Client" class="client-img me-3" width="60" height="60">
                             <div>
                                 <h5 class="mb-0">Odete de Conceição</h5>
                                 <small class="text-muted">Utilizadora desde 2025</small>
@@ -531,7 +531,7 @@
                         <div class="rating">★★★★★</div>
                         <p class="fst-italic mb-4">"Como gestor de uma equipa remota, o TelePomba tornou-se essencial para o nosso trabalho diário. Os grupos e a partilha de ficheiros são excelentes!"</p>
                         <div class="d-flex align-items-center">
-                            <img src="ficheiros/media/index/ramalho.jpg" alt="Client" class="client-img me-3" width="60" height="60">
+                            <img src="ficheiros/media/img/ramalho.jpg" alt="Client" class="client-img me-3" width="60" height="60">
                             <div>
                                 <h5 class="mb-0">Ramalho Crispim</h5>
                                 <small class="text-muted">Gestor de Projetos</small>
@@ -544,7 +544,7 @@
                         <div class="rating">★★★★★</div>
                         <p class="fst-italic mb-4">"Adoro a segurança que o TelePomba oferece. Sinto-me confortável a partilhar informações pessoais, sabendo que estão protegidas."</p>
                         <div class="d-flex align-items-center">
-                            <img src="ficheiros/media/index/ferreira.png" alt="Client" class="client-img me-3" width="60" height="60">
+                            <img src="ficheiros/media/img/ferreira.png" alt="Client" class="client-img me-3" width="60" height="60">
                             <div>
                                 <h5 class="mb-0">Luzia Ferreira</h5>
                                 <small class="text-muted">Especialista em Segurança</small>
@@ -570,7 +570,7 @@
         <div class="row justify-content-center mb-5">
             <div class="col-md-6 animate-on-scroll animate-fadeInUp">
                 <div class="card scrum-master-card text-center p-4">
-                    <img src="ficheiros/media/index/thomaz.png" class="scrum-master-img mb-3" alt="Scrum Master" width="200" height="200">
+                    <img src="ficheiros/media/img/thomaz.png" class="scrum-master-img mb-3" alt="Scrum Master" width="200" height="200">
                     <h3>Thomaz Cortez</h3>
                     <p class="text-primary fw-bold">Scrum Master e Fundador</p>
                     <p>Com 0 anos de experiência no desenvolvimento de plataformas de comunicação, Thomaz lidera a equipa do TelePomba com paixão e inovação.</p>
@@ -586,7 +586,7 @@
             <!-- Desenvolvedor 1 -->
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.2s">
                 <div class="card team-card text-center p-3">
-                    <img src="ficheiros/media/index/marco.png" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <img src="ficheiros/media/img/marco.png" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Marco Neto</h5>
                     <p class="text-primary">Co-Founder e Definições de Utilizador</p>
                 </div>
@@ -595,7 +595,7 @@
             <!-- Desenvolvedor 2 -->
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.3s">
                 <div class="card team-card text-center p-3">
-                    <img src="ficheiros/media/index/miguel.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <img src="ficheiros/media/img/miguel.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Miguel Duarte</h5>
                     <p class="text-primary">Imagens</p>
                 </div>
@@ -604,7 +604,7 @@
             <!-- Desenvolvedor 3 -->
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.4s">
                 <div class="card team-card text-center p-3">
-                    <img src="ficheiros/media/index/lourenco.png" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <img src="ficheiros/media/img/lourenco.png" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Lourenço Mestre</h5>
                     <p class="text-primary">Footer e Base de Dados</p>
                 </div>
@@ -613,7 +613,7 @@
             <!-- Desenvolvedor 4 -->
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.5s">
                 <div class="card team-card text-center p-3">
-                    <img src="ficheiros/media/index/martim.png" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <img src="ficheiros/media/img/martim.png" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Martim Marreiros</h5>
                     <p class="text-primary">Definições de Utilizador</p>
                 </div>
@@ -622,7 +622,7 @@
             <!-- Desenvolvedor 5 -->
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.6s">
                 <div class="card team-card text-center p-3">
-                    <img src="ficheiros/media/index/yat.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <img src="ficheiros/media/img/yat.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Yathaarth Handa</h5>
                     <p class="text-primary">Index</p>
                 </div>
@@ -631,7 +631,7 @@
             <!-- Desenvolvedor 6 -->
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.7s">
                 <div class="card team-card text-center p-3">
-                    <img src="ficheiros/media/index/pomba.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <img src="ficheiros/media/img/pomba.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Gustavo Pomba</h5>
                     <p class="text-primary">Login, Registo e Logout</p>
                 </div>
@@ -640,7 +640,7 @@
             <!-- Desenvolvedor 7 -->
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.8s">
                 <div class="card team-card text-center p-3">
-                    <img src="ficheiros/media/index/mega.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <img src="ficheiros/media/img/mega.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Gonçalo Dionísio</h5>
                     <p class="text-primary">Header e Navbar</p>
                 </div>
@@ -649,7 +649,7 @@
             <!-- Desenvolvedor 8 -->
             <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp" style="animation-delay: 0.9s">
                 <div class="card team-card text-center p-3">
-                    <img src="ficheiros/media/index/henrique.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                    <img src="ficheiros/media/img/henrique.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Henrique Domingos</h5>
                     <p class="text-primary">Base de Dados</p>
                 </div>
@@ -660,7 +660,7 @@
     <!-- Desenvolvedor 9 -->
     <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp mx-md-4" style="animation-delay: 1s">
         <div class="card team-card text-center p-3">
-            <img src="ficheiros/media/index/rafa.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+            <img src="ficheiros/media/img/rafa.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
             <h5>Rafael Costa</h5>
             <p class="text-primary">Logotípo e Imagens</p>
         </div>
@@ -669,7 +669,7 @@
     <!-- Desenvolvedor 10 -->
     <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp mx-md-4" style="animation-delay: 1.1s">
         <div class="card team-card text-center p-3">
-            <img src="ficheiros/media/index/nic.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+            <img src="ficheiros/media/img/nic.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
             <h5>Nicolas Almeida</h5>
             <p class="text-primary">Login, Registo e Logout</p>
         </div>
@@ -686,14 +686,14 @@
             <div class="col-md-8 animate-on-scroll animate-fadeIn">
                 <h2 class="mb-4">Pronto para começar?</h2>
                 <p class="lead mb-5">Junte-se à nossa comunidade hoje e comece a partilhar os seus momentos.</p>
-                <a href="/TelePomba/ficheiros/login/registo.php" class="btn btn-light btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite animate__slower">Criar Conta Gratuitamente</a>
+                <a href="/TelePomba/utilizador/registo.php" class="btn btn-light btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite animate__slower">Criar Conta Gratuitamente</a>
             </div>
         </div>
     </div>
 </section>
 
     <!-- Footer -->
-    <?php include 'ficheiros/includes/footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 
     <!-- Bootstrap JS with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

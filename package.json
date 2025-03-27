@@ -1,0 +1,9 @@
+{
+    "name": "telepomba",
+    "version": "1.0.0",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mysql2": "^3.14.0",
+        "socket.io": "^4.0.1"
+    }
+}
