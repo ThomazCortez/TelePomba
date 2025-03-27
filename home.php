@@ -16,20 +16,24 @@ require_once 'config/database.php';
         .chat-container {
             height: 100vh;
         }
+        
         .contacts-list {
             height: calc(100vh - 120px);
             overflow-y: auto;
         }
+        
         .chat-messages {
             height: calc(100vh - 180px);
             overflow-y: auto;
         }
+        
         .profile-img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
         }
+        
         .conversation-item:hover {
             background-color: #f8f9fa !important;
         }
@@ -50,39 +54,40 @@ require_once 'config/database.php';
             width: 10px;
             height: 10px;
         }
+        
         /* Add to existing styles */
-#typingIndicator {
-    height: 20px;
-    font-style: italic;
-    transition: opacity 0.3s ease;
-}
+        #typingIndicator {
+            height: 20px;
+            font-style: italic;
+            transition: opacity 0.3s ease;
+        }
 
-.typing-dots {
-    display: inline-flex;
-    align-items: center;
-}
+        .typing-dots {
+            display: inline-flex;
+            align-items: center;
+        }
 
-.typing-dots span {
-    width: 5px;
-    height: 5px;
-    margin: 0 2px;
-    background-color: #6c757d;
-    border-radius: 50%;
-    animation: typing 1.4s infinite ease-in-out;
-}
+        .typing-dots span {
+            width: 5px;
+            height: 5px;
+            margin: 0 2px;
+            background-color: #6c757d;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
 
-.typing-dots span:nth-child(2) {
-    animation-delay: 0.2s;
-}
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
 
-.typing-dots span:nth-child(3) {
-    animation-delay: 0.4s;
-}
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
 
-@keyframes typing {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
     </style>
 </head>
 <body>
@@ -91,12 +96,15 @@ require_once 'config/database.php';
             <!-- Sidebar -->
             <div class="col-md-4 bg-light p-0 border-end">
                 <div class="d-flex flex-column h-100">
-                    <!-- User profile header -->
                     <div class="p-3 bg-white border-bottom d-flex justify-content-between align-items-center">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
-                                <img src="<?= $_SESSION['profile_image'] ?>" alt="Profile" class="profile-img me-2">
-                                <span><?= $_SESSION['username'] ?></span>
+                                <?php if (!empty($_SESSION['imagem_perfil'])): ?>
+                                    <img src="<?= htmlspecialchars($_SESSION['imagem_perfil']) ?>" alt="Profile" class="profile-img me-2">
+                                <?php else: ?>
+                                    <img src="ficheiros/dashboard/dashboard/uploads/default_profile_image.jpg" alt="Profile" class="profile-img me-2">
+                                <?php endif; ?>
+                                <span><?= htmlspecialchars($_SESSION['username']) ?></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
@@ -109,7 +117,7 @@ require_once 'config/database.php';
                             </button>
                         </div>
                     </div>
-                    
+
                     <!-- Search -->
                     <div class="p-2 bg-light border-bottom">
                         <div class="input-group">
@@ -191,34 +199,30 @@ require_once 'config/database.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
-        const socket = io('http://localhost:3000', { // Match your Node server port
-        reconnection: true,
-        reconnectionAttempts: 5,
-        reconnectionDelay: 1000,
-        transports: ['websocket', 'polling']
+        const socket = io('http://localhost:3000', {
+            reconnection: true,
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000,
+            transports: ['websocket', 'polling']
         });
-        
 
         socket.on('connect', () => {
-  console.log('Connected to Socket.io server');
-});
+            console.log('Connected to Socket.io server');
+        });
 
-socket.on('connect_error', (err) => {
-  console.error('Connection error:', err);
-});
+        socket.on('connect_error', (err) => {
+            console.error('Connection error:', err);
+        });
 
-socket.on('disconnect', (reason) => {
-  console.log('Disconnected:', reason);
-});
+        socket.on('disconnect', (reason) => {
+            console.log('Disconnected:', reason);
+        });
 
         const currentUserId = <?= $_SESSION['user_id'] ?>;
-        // Add this at the top of your script with other variable declarations
         let activeConversationId = null;
         
-        // Authenticate with socket server
         socket.emit('authenticate', currentUserId);
         
-        // Load conversations
         function loadConversations() {
             fetch('includes/get_conversations.php')
                 .then(response => response.text())
@@ -226,51 +230,38 @@ socket.on('disconnect', (reason) => {
                     document.getElementById('conversationsList').innerHTML = html;
                 });
         }
-        
-        
-        
-        // Update your existing send message code
+
         document.getElementById('sendMessageBtn').addEventListener('click', () => {
-    const messageInput = document.getElementById('messageInput');
-    const message = messageInput.value.trim();
-    
-    if (message && activeConversationId) {
-        // Clear input immediately
-        messageInput.value = '';
-        
-        // Send to server
-        socket.emit('sendMessage', {
-            conversationId: activeConversationId,
-            senderId: currentUserId,
-            content: message
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            if (message && activeConversationId) {
+                messageInput.value = '';
+                socket.emit('sendMessage', {
+                    conversationId: activeConversationId,
+                    senderId: currentUserId,
+                    content: message
+                });
+            } else if (!activeConversationId) {
+                alert('Please select a conversation first');
+            }
         });
-        
-        // Don't add to UI here - wait for server confirmation
-    } else if (!activeConversationId) {
-        alert('Please select a conversation first');
-    }
-});
-        
-        // Also send message on Enter key
+
         document.getElementById('messageInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 document.getElementById('sendMessageBtn').click();
             }
         });
-        
-        // New chat modal
+
         document.getElementById('newChatBtn').addEventListener('click', () => {
-            const modal = new bootstrap.Modal(document.getElementById('newChatModal'));
-            modal.show();
+            new bootstrap.Modal(document.getElementById('newChatModal')).show();
         });
-        
-        // Toggle group name field based on chat type
+
         document.getElementById('chatType').addEventListener('change', (e) => {
-            const groupNameContainer = document.getElementById('groupNameContainer');
-            groupNameContainer.style.display = e.target.value === 'group' ? 'block' : 'none';
+            document.getElementById('groupNameContainer').style.display = 
+                e.target.value === 'group' ? 'block' : 'none';
         });
-        
-        // Handle adding participants
+
         const participants = new Set();
         document.getElementById('addParticipantInput').addEventListener('keypress', async (e) => {
             if (e.key === 'Enter') {
@@ -300,8 +291,7 @@ socket.on('disconnect', (reason) => {
                 }
             }
         });
-        
-        // Remove participant
+
         document.getElementById('participantsList').addEventListener('click', (e) => {
             if (e.target.classList.contains('btn-close')) {
                 const userId = e.target.dataset.userId;
@@ -309,8 +299,7 @@ socket.on('disconnect', (reason) => {
                 e.target.parentElement.remove();
             }
         });
-        
-        // Create new chat
+
         document.getElementById('createChatBtn').addEventListener('click', async () => {
             const chatType = document.getElementById('chatType').value;
             const groupName = chatType === 'group' ? document.getElementById('groupNameInput').value.trim() : null;
@@ -328,9 +317,7 @@ socket.on('disconnect', (reason) => {
             try {
                 const response = await fetch('includes/create_conversation.php', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         type: chatType,
                         participants: Array.from(participants),
@@ -342,8 +329,7 @@ socket.on('disconnect', (reason) => {
                 
                 if (result.success) {
                     loadConversations();
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('newChatModal'));
-                    modal.hide();
+                    bootstrap.Modal.getInstance(document.getElementById('newChatModal')).hide();
                 } else {
                     alert(result.message || 'Error creating conversation');
                 }
@@ -352,79 +338,60 @@ socket.on('disconnect', (reason) => {
                 alert('Error creating conversation');
             }
         });
-        
-        // Listen for new messages
+
         socket.on('newMessage', (data) => {
-    console.log('Received message:', data);
-    if (activeConversationId === data.conversationId) {
-        const isCurrentUser = data.senderId == currentUserId;
-        const messageElement = createMessageElement(data, isCurrentUser);
-        document.getElementById('messagesContainer').appendChild(messageElement);
-        
-        // Scroll to bottom
-        const messagesContainer = document.getElementById('messagesContainer');
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-});
+            console.log('Received message:', data);
+            if (activeConversationId === data.conversationId) {
+                const isCurrentUser = data.senderId == currentUserId;
+                const messageElement = createMessageElement(data, isCurrentUser);
+                document.getElementById('messagesContainer').appendChild(messageElement);
+                
+                const messagesContainer = document.getElementById('messagesContainer');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        });
 
-    
-
-        // Add this to your existing script
         document.getElementById('logoutBtn').addEventListener('click', (e) => {
             e.preventDefault();
-            // Open logout confirmation modal or directly logout
             const confirmLogout = confirm('Are you sure you want to logout?');
             if (confirmLogout) {
                 window.location.href = 'utilizador/logout.php';
             }
         });
 
-        // Handle forced logout (when server detects disconnect)
         socket.on('forceLogout', () => {
             alert('You have been logged out from another device.');
             window.location.href = 'includes/logout_process.php';
         });
 
         function loadMessages(conversationId) {
-        // Clear current messages while loading
-        document.getElementById('messagesContainer').innerHTML = 'Loading...';
-        
-        fetch(`includes/get_messages.php?conversation_id=${conversationId}`)
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('messagesContainer').innerHTML = html;
-                document.getElementById('messageInputContainer').style.display = 'block';
-                
-                // Scroll to bottom
-                const messagesContainer = document.getElementById('messagesContainer');
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                
-                // Leave any previous conversation room
-                if (activeConversationId) {
-                    socket.emit('leaveConversation', activeConversationId);
-                }
-                
-                // Join new conversation room
-                socket.emit('joinConversation', conversationId);
-                
-                // Store active conversation
-                activeConversationId = conversationId;
-                
-                // Update chat header data attribute
-                document.getElementById('chatHeader').dataset.conversationId = conversationId;
-            });
-    }
+            document.getElementById('messagesContainer').innerHTML = 'Loading...';
+            
+            fetch(`includes/get_messages.php?conversation_id=${conversationId}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('messagesContainer').innerHTML = html;
+                    document.getElementById('messageInputContainer').style.display = 'block';
+                    
+                    const messagesContainer = document.getElementById('messagesContainer');
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    
+                    if (activeConversationId) {
+                        socket.emit('leaveConversation', activeConversationId);
+                    }
+                    
+                    socket.emit('joinConversation', conversationId);
+                    activeConversationId = conversationId;
+                    document.getElementById('chatHeader').dataset.conversationId = conversationId;
+                });
+        }
 
-
-        // Add event delegation for conversation items
-        // Replace any existing chat selection code with this:
         document.getElementById('conversationsList').addEventListener('click', (e) => {
             const conversationItem = e.target.closest('.conversation-item');
             if (conversationItem) {
                 const conversationId = conversationItem.dataset.conversationId;
                 loadMessages(conversationId);
                 
-                // Highlight selected conversation
                 document.querySelectorAll('.conversation-item').forEach(item => {
                     item.classList.remove('bg-light');
                 });
@@ -432,7 +399,6 @@ socket.on('disconnect', (reason) => {
             }
         });
 
-        // Add this function to create message elements consistently
         function createMessageElement(data, isCurrentUser) {
             const messageElement = document.createElement('div');
             messageElement.className = `mb-3 ${isCurrentUser ? 'text-end' : 'text-start'}`;
@@ -443,9 +409,7 @@ socket.on('disconnect', (reason) => {
                         <img src="${data.senderImage}" alt="${data.senderName}" class="profile-img me-2">
                     ` : ''}
                     <div>
-                        ${!isCurrentUser ? `
-                            <div class="fw-bold">${data.senderName}</div>
-                        ` : ''}
+                        ${!isCurrentUser ? `<div class="fw-bold">${data.senderName}</div>` : ''}
                         <div class="p-2 rounded ${isCurrentUser ? 'bg-primary text-white' : 'bg-white'}">
                             ${data.content}
                         </div>
@@ -460,9 +424,6 @@ socket.on('disconnect', (reason) => {
             return messageElement;
         }
 
-        
-        
-        // Initial load
         loadConversations();
     </script>
 </body>

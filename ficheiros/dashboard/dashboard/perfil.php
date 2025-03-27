@@ -1,12 +1,13 @@
 <?php
+
 session_start();
 
-// Verifica se o usuário está autenticado
-if (!isset($_SESSION['id_utilizador'])) {
-    header("Location: login.php");
-    exit;
+function redirectIfNotLoggedIn() {
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
+        exit;
+    }
 }
-
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -18,7 +19,7 @@ if ($conn->connect_error) {
     die("Erro de conexão: " . $conn->connect_error);
 }
 
-$id_utilizador = $_SESSION['id_utilizador'];
+$id_utilizador = $_SESSION['user_id'];
 
 // Busca os dados atuais do usuário
 $stmt = $conn->prepare("SELECT nome_utilizador, email, descricao, estado, imagem_perfil FROM utilizadores WHERE id_utilizador = ?");
