@@ -100,7 +100,7 @@ require_once 'config/database.php';
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="ficheiros/dashboard/dashboard/perfil.php">Settings</a></li>
                             </ul>
                         </div>
                         <div>
