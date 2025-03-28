@@ -40,92 +40,106 @@ $imagem_perfil = $user['imagem_perfil'] ?? '';
 $error = $success = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtém e valida os dados dos campos
-    $nome_utilizador = isset($_POST['nome_utilizador']) ? trim($_POST['nome_utilizador']) : '';
-    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $descricao = isset($_POST['descricao']) ? trim($_POST['descricao']) : '';
-    $estado = isset($_POST['estado']) ? trim($_POST['estado']) : '';
-
-    // Campos para nova senha
-    $nova_palavra_passe = isset($_POST['nova_palavra_passe']) ? trim($_POST['nova_palavra_passe']) : '';
-    $confirmar_palavra_passe = isset($_POST['confirmar_palavra_passe']) ? trim($_POST['confirmar_palavra_passe']) : '';
-
-    if (empty($nome_utilizador)) {
-        $error = "Nome de utilizador não pode estar vazio!";
-    } elseif (empty($email)) {
-        $error = "Email não pode estar vazio!";
-    } elseif (!empty($nova_palavra_passe) && ($nova_palavra_passe !== $confirmar_palavra_passe)) {
-        $error = "As senhas não coincidem!";
+    // Se o botão de remover imagem foi pressionado
+    if (isset($_POST['remover_imagem'])) {
+        $updateQuery = "UPDATE utilizadores SET imagem_perfil = NULL WHERE id_utilizador = ?";
+        $stmt = $conn->prepare($updateQuery);
+        $stmt->bind_param("i", $id_utilizador);
+        if ($stmt->execute()) {
+            $success = "Imagem de perfil removida com sucesso!";
+            $imagem_perfil = ""; // Atualiza a variável para remover da interface
+            $_SESSION['imagem_perfil'] = null; // Remove da sessão
+        } else {
+            $error = "Erro ao remover a imagem de perfil: " . $stmt->error;
+        }
+        $stmt->close();
     } else {
-        // Inicia a construção da query para atualizar os dados
-        $updateQuery = "UPDATE utilizadores SET nome_utilizador = ?, email = ?, descricao = ?, estado = ?";
-        $params = [$nome_utilizador, $email, $descricao, $estado];
-        $param_types = "ssss";
+        // Obtém e valida os dados dos campos
+        $nome_utilizador = isset($_POST['nome_utilizador']) ? trim($_POST['nome_utilizador']) : '';
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $descricao = isset($_POST['descricao']) ? trim($_POST['descricao']) : '';
+        $estado = isset($_POST['estado']) ? trim($_POST['estado']) : '';
 
-        // Se uma nova senha foi informada, faz o hash e adiciona na query
-        if (!empty($nova_palavra_passe)) {
-            $hashed_password = password_hash($nova_palavra_passe, PASSWORD_DEFAULT);
-            $updateQuery .= ", palavra_passe = ?";
-            $params[] = $hashed_password;
-            $param_types .= "s";
-        }
+        // Campos para nova senha
+        $nova_palavra_passe = isset($_POST['nova_palavra_passe']) ? trim($_POST['nova_palavra_passe']) : '';
+        $confirmar_palavra_passe = isset($_POST['confirmar_palavra_passe']) ? trim($_POST['confirmar_palavra_passe']) : '';
 
-        // Se uma imagem de perfil foi enviada, trata o upload
-        if (isset($_FILES['imagem_perfil']) && $_FILES['imagem_perfil']['error'] === UPLOAD_ERR_OK) {
-            $targetDir = "uploads/";
-            if (!is_dir($targetDir)) {
-                mkdir($targetDir, 0755, true);
-            }
-            $filename = basename($_FILES['imagem_perfil']['name']);
-            $targetFile = $targetDir . time() . "_" . $filename;
-            if (move_uploaded_file($_FILES['imagem_perfil']['tmp_name'], $targetFile)) {
-                // Aqui você atualiza a query para salvar o caminho no banco
-                $updateQuery .= ", imagem_perfil = ?";
-                $params[] = $targetFile;
+        if (empty($nome_utilizador)) {
+            $error = "Nome de utilizador não pode estar vazio!";
+        } elseif (empty($email)) {
+            $error = "Email não pode estar vazio!";
+        } elseif (!empty($nova_palavra_passe) && ($nova_palavra_passe !== $confirmar_palavra_passe)) {
+            $error = "As senhas não coincidem!";
+        } else {
+            // Inicia a construção da query para atualizar os dados
+            $updateQuery = "UPDATE utilizadores SET nome_utilizador = ?, email = ?, descricao = ?, estado = ?";
+            $params = [$nome_utilizador, $email, $descricao, $estado];
+            $param_types = "ssss";
+
+            // Se uma nova senha foi informada, faz o hash e adiciona na query
+            if (!empty($nova_palavra_passe)) {
+                $hashed_password = password_hash($nova_palavra_passe, PASSWORD_DEFAULT);
+                $updateQuery .= ", palavra_passe = ?";
+                $params[] = $hashed_password;
                 $param_types .= "s";
-                // Atualize também a variável de sessão:
-                $_SESSION['imagem_perfil'] = $targetFile;
-            } else {
-                $error = "Erro no upload da imagem de perfil.";
-            }
-        }
-
-        // Completa a query com a condição do id
-        $updateQuery .= " WHERE id_utilizador = ?";
-        $params[] = $id_utilizador;
-        $param_types .= "i";
-
-        // Se não houve erro no upload, prossegue com a atualização
-        if (empty($error)) {
-            $stmt = $conn->prepare($updateQuery);
-            if ($stmt === false) {
-                die("Erro na preparação da query: " . $conn->error);
             }
 
-            // Faz o bind dinâmico dos parâmetros
-            $bind_names[] = $param_types;
-            for ($i = 0; $i < count($params); $i++) {
-                $bind_names[] = &$params[$i];
-            }
-            call_user_func_array([$stmt, 'bind_param'], $bind_names);
-
-            if ($stmt->execute()) {
-                $success = "Dados atualizados com sucesso!";
-                // Atualiza a variável de imagem se foi alterada
-                if (!empty($targetFile)) {
-                    $imagem_perfil = $targetFile;
+            // Se uma imagem de perfil foi enviada, trata o upload
+            if (isset($_FILES['imagem_perfil']) && $_FILES['imagem_perfil']['error'] === UPLOAD_ERR_OK) {
+                $targetDir = "uploads/";
+                if (!is_dir($targetDir)) {
+                    mkdir($targetDir, 0755, true);
                 }
-            } else {
-                $error = "Erro ao atualizar os dados: " . $stmt->error;
+                $filename = basename($_FILES['imagem_perfil']['name']);
+                $targetFile = $targetDir . time() . "_" . $filename;
+                if (move_uploaded_file($_FILES['imagem_perfil']['tmp_name'], $targetFile)) {
+                    // Aqui você atualiza a query para salvar o caminho no banco
+                    $updateQuery .= ", imagem_perfil = ?";
+                    $params[] = $targetFile;
+                    $param_types .= "s";
+                    // Atualize também a variável de sessão:
+                    $_SESSION['imagem_perfil'] = $targetFile;
+                } else {
+                    $error = "Erro no upload da imagem de perfil.";
+                }
             }
-            $stmt->close();
+
+            // Completa a query com a condição do id
+            $updateQuery .= " WHERE id_utilizador = ?";
+            $params[] = $id_utilizador;
+            $param_types .= "i";
+
+            // Se não houve erro no upload, prossegue com a atualização
+            if (empty($error)) {
+                $stmt = $conn->prepare($updateQuery);
+                if ($stmt === false) {
+                    die("Erro na preparação da query: " . $conn->error);
+                }
+
+                // Faz o bind dinâmico dos parâmetros
+                $bind_names[] = $param_types;
+                for ($i = 0; $i < count($params); $i++) {
+                    $bind_names[] = &$params[$i];
+                }
+                call_user_func_array([$stmt, 'bind_param'], $bind_names);
+
+                if ($stmt->execute()) {
+                    $success = "Dados atualizados com sucesso!";
+                    // Atualiza a variável de imagem se foi alterada
+                    if (!empty($targetFile)) {
+                        $imagem_perfil = $targetFile;
+                    }
+                } else {
+                    $error = "Erro ao atualizar os dados: " . $stmt->error;
+                }
+                $stmt->close();
+            }
         }
     }
 }
 
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -216,6 +230,9 @@ $conn->close();
                     <label for="imagem_perfil" class="form-label">Imagem de Perfil</label>
                     <input type="file" id="imagem_perfil" name="imagem_perfil" class="form-control">
                 </div>
+                <?php if (!empty($imagem_perfil)) : ?>
+                    <button type="submit" name="remover_imagem" class="btn btn-danger w-100 mb-3">Remover Imagem</button>
+                <?php endif; ?>
                 <div class="mb-3">
                     <label for="nova_palavra_passe" class="form-label">Nova Senha</label>
                     <input type="password" id="nova_palavra_passe" name="nova_palavra_passe" class="form-control">

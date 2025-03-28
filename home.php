@@ -16,13 +16,13 @@ require_once 'config/database.php';
     
     <style>
         :root {
-    --primary-color: #2a6b5f;  /* Deep forest green */
-    --secondary-color: #e9f5ec;  /* Soft pastel green */
-    --accent-color: #ff6b6b;  /* Warm contrast color */
-    --text-color: #2e3d30;  /* Dark green-gray */
-    --light-text: #ffffff;
-    --light-gray-bg: #f4faf6;  /* Lighter green-gray */
-}
+            --primary-color: #2a6b5f;  /* Deep forest green */
+            --secondary-color: #e9f5ec;  /* Soft pastel green */
+            --accent-color: #ff6b6b;  /* Warm contrast color */
+            --text-color: #2e3d30;  /* Dark green-gray */
+            --light-text: #ffffff;
+            --light-gray-bg: #f4faf6;  /* Lighter green-gray */
+        }   
 
         .chat-container {
             height: 100vh;
@@ -46,9 +46,9 @@ require_once 'config/database.php';
         }
         
         .conversation-item:hover {
-    background-color: var(--light-gray-bg) !important;
-    cursor: pointer;
-}
+            background-color: var(--light-gray-bg) !important;
+            cursor: pointer;
+        }
 
         .conversation-item.bg-light {
             background-color: var(--secondary-color) !important;
@@ -68,67 +68,68 @@ require_once 'config/database.php';
 
         /* Custom overrides */
         body {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    font-family: 'Inter', sans-serif;
-}
-.btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    transition: all 0.3s ease;
-}
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
 
-.btn-primary:hover {
-    background-color: #23574d;
-    border-color: #23574d;
-}
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #23574d;
+            border-color: #23574d;
+        }
 
         .bg-light {
-    background-color: var(--light-gray-bg) !important;
-}
+            background-color: var(--light-gray-bg) !important;
+        }
 
         #chatHeader,
         #messageInputContainer {
-            background-color: var(--light-text);
+             background-color: var(--light-text);
         }
 
         .message-bubble {
-    background-color: var(--primary-color);
-    color: var(--light-text);
-    border-radius: 1rem;
-    padding: 0.5rem 1rem;
-    max-width: 80%;
-}
-
-        .animate-delay-1 {
-            animation-delay: 0.1s;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border-radius: 1rem;
+            padding: 0.5rem 1rem;
+            max-width: 80%;
         }
 
-        #chatHeader, #messageInputContainer {
-    background-color: var(--secondary-color);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
+                .animate-delay-1 {
+                    animation-delay: 0.1s;
+                }
 
-.message-bubble.received {
-    background-color: var(--light-gray-bg);
-    color: var(--text-color);
-}
+                #chatHeader, #messageInputContainer {
+            background-color: var(--secondary-color);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
 
-.input-group input {
-    border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 10px;
-}
+        .message-bubble.received {
+            background-color: var(--light-gray-bg);
+            color: var(--text-color);
+        }
 
-.input-group .btn {
-    border-radius: 20px;
-}
+        .input-group input {
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
 
-.conversation-item {
-    transition: background 0.3s ease;
-    padding: 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
+        .input-group .btn {
+            border-radius: 20px;
+        }
+
+        .conversation-item {
+            transition: background 0.3s ease;
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
 
     </style>
 </head>
@@ -144,13 +145,13 @@ require_once 'config/database.php';
                                 <?php if (!empty($_SESSION['imagem_perfil'])): ?>
                                     <img src="<?= htmlspecialchars($_SESSION['imagem_perfil']) ?>" alt="Profile" class="profile-img me-2">
                                 <?php else: ?>
-                                    <img src="TelePomba/ficheiros/dashboard/dashboard/uploads/default_profile_image.jpg" alt="Profile" class="profile-img me-2">
+                                    <img src="uploads/default_profile_image.jpg" alt="Profile" class="profile-img me-2">
                                 <?php endif; ?>
                                 <span><?= htmlspecialchars($_SESSION['username']) ?></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="ficheiros/dashboard/dashboard/perfil.php">Definições</a></li>
                                 <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
-                                <li><a class="dropdown-item" href="ficheiros/dashboard/dashboard/perfil.php">Settings</a></li>
                             </ul>
                         </div>
                         <div>
@@ -163,7 +164,7 @@ require_once 'config/database.php';
                     <!-- Search -->
                     <div class="p-2 bg-light border-bottom animate__animated animate__fadeIn">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search or start new chat">
+                            <input type="text" class="form-control" placeholder="Pesquise ou crie um novo chat">
                             <button class="btn btn-outline-secondary" type="button">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -182,7 +183,7 @@ require_once 'config/database.php';
                 <!-- Chat header -->
                 <div class="p-3 bg-white border-bottom d-flex justify-content-between align-items-center" id="chatHeader">
                     <div class="text-center w-100">
-                        <h5 class="m-0">Select a chat to start messaging</h5>
+                        <h5 class="m-0">Selecione um chat para começar a conversar</h5>
                     </div>
                 </div>
                 
@@ -194,7 +195,7 @@ require_once 'config/database.php';
                 <!-- Message input -->
                 <div class="p-3 bg-white border-top" id="messageInputContainer" style="display: none;">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Type a message" id="messageInput">
+                        <input type="text" class="form-control" placeholder="Escreva uma mensagem" id="messageInput">
                         <button class="btn btn-primary" type="button" id="sendMessageBtn">
                             <i class="fas fa-paper-plane"></i>
                         </button>
@@ -209,30 +210,30 @@ require_once 'config/database.php';
         <div class="modal-dialog animate__animated animate__zoomIn">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">New Chat</h5>
+                    <h5 class="modal-title">Novo chat</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Select chat type</label>
+                        <label class="form-label">Selecione o tipo de chat:</label>
                         <select class="form-select" id="chatType">
-                            <option value="private">Private Chat</option>
-                            <option value="group">Group Chat</option>
+                            <option value="private">Chat privado</option>
+                            <option value="group">Chat em grupo</option>
                         </select>
                     </div>
                     <div class="mb-3" id="participantsContainer">
-                        <label class="form-label">Add participants (type name and press enter)</label>
+                        <label class="form-label">Adicionar participantes (Insira um nome e prima Enter)</label>
                         <input type="text" class="form-control" id="addParticipantInput">
                         <div class="mt-2" id="participantsList"></div>
                     </div>
                     <div class="mb-3" id="groupNameContainer" style="display: none;">
-                        <label class="form-label">Group name</label>
+                        <label class="form-label">Nome do grupo:</label>
                         <input type="text" class="form-control" id="groupNameInput">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="createChatBtn">Create</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="createChatBtn">Criar</button>
                 </div>
             </div>
         </div>
