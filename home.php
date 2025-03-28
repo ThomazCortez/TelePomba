@@ -144,7 +144,7 @@ require_once 'config/database.php';
                                 <?php if (!empty($_SESSION['imagem_perfil'])): ?>
                                     <img src="<?= htmlspecialchars($_SESSION['imagem_perfil']) ?>" alt="Profile" class="profile-img me-2">
                                 <?php else: ?>
-                                    <img src="ficheiros/dashboard/dashboard/uploads/default_imagem_perfil.jpg" alt="Profile" class="profile-img me-2">
+                                    <img src="TelePomba/ficheiros/dashboard/dashboard/uploads/default_profile_image.jpg" alt="Profile" class="profile-img me-2">
                                 <?php endif; ?>
                                 <span><?= htmlspecialchars($_SESSION['username']) ?></span>
                             </button>

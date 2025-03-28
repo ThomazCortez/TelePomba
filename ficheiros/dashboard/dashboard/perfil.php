@@ -76,13 +76,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!is_dir($targetDir)) {
                 mkdir($targetDir, 0755, true);
             }
-            // Gera um nome único para o arquivo (time + nome original)
             $filename = basename($_FILES['imagem_perfil']['name']);
             $targetFile = $targetDir . time() . "_" . $filename;
             if (move_uploaded_file($_FILES['imagem_perfil']['tmp_name'], $targetFile)) {
+                // Aqui você atualiza a query para salvar o caminho no banco
                 $updateQuery .= ", imagem_perfil = ?";
                 $params[] = $targetFile;
                 $param_types .= "s";
+                // Atualize também a variável de sessão:
+                $_SESSION['imagem_perfil'] = $targetFile;
             } else {
                 $error = "Erro no upload da imagem de perfil.";
             }
@@ -178,7 +180,13 @@ $conn->close();
 <body>
     <div class="container">
         <div class="settings-container">
-            <h2 class="text-center mb-4">Configurações de Conta</h2>
+        <div class="position-relative mb-4">
+            <!-- Seta à esquerda -->
+            <a href="../../../home.php" class="position-absolute top-0 start-0 text-dark p-2" title="Voltar">
+            <i class="fas fa-arrow-left fa-lg"></i>
+            </a>
+            <h2 class="text-center">Configurações de Conta</h2>
+        </div>
             <?php if (!empty($imagem_perfil)) : ?>
                 <img src="<?php echo htmlspecialchars($imagem_perfil); ?>" alt="Imagem de Perfil" class="profile-img">
             <?php endif; ?>
@@ -217,7 +225,10 @@ $conn->close();
                     <input type="password" id="confirmar_palavra_passe" name="confirmar_palavra_passe" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Salvar Alterações</button>
-            </form>
+                <a href="../../../home.php" class="btn btn-outline-danger w-100 mt-2">
+                <i class="fas fa-sign-out-alt me-2"></i>Sair
+                </a>
+            </form>     
         </div>
     </div>
 </body>
