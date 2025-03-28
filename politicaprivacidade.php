@@ -170,54 +170,24 @@
         <h1>Política de Privacidade</h1>
         
         <h2>1. Recolha de Informações</h2>
-        <p>Recolhemos informações pessoais quando se regista no nosso serviço, incluindo nome, correio eletrónico e dados de utilização. Estas informações são utilizadas exclusivamente para prestar e melhorar os nossos serviços.</p>
+        <p>Recolhemos informações pessoais quando se regista no nosso serviço, incluindo nome, endereço de e-mail e dados de utilização. Estas informações são utilizadas exclusivamente para fornecer e melhorar os nossos serviços.</p>
 
         <h2>2. Utilização dos Dados</h2>
         <p>Os seus dados são utilizados para personalizar a sua experiência, processar transações e enviar comunicações relevantes. Nunca partilhamos as suas informações com terceiros sem o seu consentimento explícito.</p>
 
         <h2>3. Cookies</h2>
-        <p>Utilizamos cookies para melhorar a navegação e personalizar conteúdos. Pode gerir as preferências de cookies através das definições do seu navegador.</p>
+        <p>Utilizamos cookies para melhorar a navegação e personalizar conteúdos. Pode gerir as suas preferências de cookies através das definições do seu navegador.</p>
 
         <h2>4. Segurança</h2>
         <p>Implementamos medidas de segurança físicas e eletrónicas para proteger as suas informações, incluindo encriptação SSL e sistemas de armazenamento seguros.</p>
 
         <h2>5. Alterações</h2>
-        <p>Esta política poderá ser atualizada periodicamente. Alterações significativas serão comunicadas através dos nossos canais oficiais.</p>
+        <p>Esta política poderá ser atualizada periodicamente. Quaisquer alterações significativas serão comunicadas através dos nossos canais oficiais.</p>
     </main>
 
-    <!-- Footer igual ao index.php -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Telepomba</h3>
-                <p>Conectando pombas e telecomunicações desde 2025</p>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Contacto</h4>
-                <p>📧 contato@telepomba.com</p>
-                <p>📞 (+351) 939 658 201</p>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Redes Sociais</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 Telepomba - Todos os direitos reservados</p>
-            <div class="legal-links">
-                <a href="/TelePomba/politicaprivacidade.php">Política de Privacidade</a>
-                <a href="/TelePomba/termosservico.php">Termos de Serviço</a>
-            </div>
-        </div>
-    </footer>
-
+    <!-- Footer -->
+    <?php include 'includes/footer.php'; ?>
+    
     <!-- Bootstrap JS com Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

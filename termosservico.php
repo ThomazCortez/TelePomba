@@ -171,16 +171,16 @@
         <h1>Termos de Serviço</h1>
 
         <h2>1. Aceitação dos Termos</h2>
-        <p>Ao utilizar os nossos serviços, o utilizador concorda com estes termos e com a nossa Política de Privacidade. Caso não concorde, deverá abster-se de utilizar os nossos serviços.</p>
+        <p>Ao utilizar os nossos serviços, o utilizador aceita estes termos e a nossa Política de Privacidade. Caso não concorde, deverá abster-se de utilizar os nossos serviços.</p>
 
         <h2>2. Responsabilidades do Utilizador</h2>
-        <p>O utilizador compromete-se a não utilizar os nossos serviços para atividades ilegais e a manter a confidencialidade da sua conta. Qualquer utilização indevida resultará no término imediato do serviço.</p>
+        <p>O utilizador compromete-se a não utilizar os nossos serviços para atividades ilegais e a manter a confidencialidade da sua conta. Qualquer utilização indevida resultará na cessação imediata do serviço.</p>
 
         <h2>3. Propriedade Intelectual</h2>
         <p>Todos os direitos sobre o conteúdo e software da Telepomba estão reservados. É proibida a reprodução não autorizada de qualquer elemento da plataforma.</p>
 
         <h2>4. Limitação de Responsabilidade</h2>
-        <p>Não nos responsabilizamos por danos indiretos ou consequentes decorrentes da utilização dos serviços. A nossa responsabilidade máxima ficará limitada ao valor pago pelo serviço.</p>
+        <p>Não nos responsabilizamos por danos indiretos ou consequenciais decorrentes da utilização dos serviços. A nossa responsabilidade máxima estará limitada ao valor pago pelo serviço.</p>
 
         <h2>5. Legislação Aplicável</h2>
         <p>Estes termos são regidos pela legislação portuguesa. Qualquer litígio será resolvido nos tribunais judiciais de Lisboa.</p>
@@ -189,38 +189,9 @@
         <p>Reservamo-nos o direito de alterar estes termos a qualquer momento. As alterações entrarão em vigor imediatamente após a sua publicação na plataforma.</p>
     </main>
 
-    <!-- Footer igual ao index.php -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Telepomba</h3>
-                <p>Conectando pombas e telecomunicações desde 2025</p>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Contacto</h4>
-                <p>📧 contato@telepomba.com</p>
-                <p>📞 (+351) 939 658 201</p>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Redes Sociais</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 Telepomba - Todos os direitos reservados</p>
-            <div class="legal-links">
-                <a href="/TelePomba/politicaprivacidade.php">Política de Privacidade</a>
-                <a href="/TelePomba/termosservico.php">Termos de Serviço</a>
-            </div>
-        </div>
-    </footer>
+
+    <!-- Footer -->
+    <?php include 'includes/footer.php'; ?>
 
     <!-- Bootstrap JS com Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

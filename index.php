@@ -557,29 +557,29 @@
     </section>
 
     <!-- Team Section -->
-<section id="team">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center animate-on-scroll animate-fadeInUp">
-                <h2 class="section-title">A Nossa Equipa</h2>
-                <p class="lead mb-5">Conheça os talentosos profissionais por trás do TelePomba.</p>
+    <section id="team">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center animate-on-scroll animate-fadeInUp">
+                    <h2 class="section-title">A Nossa Equipa</h2>
+                    <p class="lead mb-5">Conheça os talentosos profissionais por trás do TelePomba.</p>
+                </div>
             </div>
-        </div>
-        
-        <!-- Scrum Master (Maior) -->
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-6 animate-on-scroll animate-fadeInUp">
-                <div class="card scrum-master-card text-center p-4">
-                    <img src="ficheiros/media/img/thomaz.png" class="scrum-master-img mb-3" alt="Scrum Master" width="200" height="200">
-                    <h3>Thomaz Cortez</h3>
-                    <p class="text-primary fw-bold">Scrum Master e Fundador</p>
-                    <p>Com 0 anos de experiência no desenvolvimento de plataformas de comunicação, Thomaz lidera a equipa do TelePomba com paixão e inovação.</p>
-                    <div class="d-flex justify-content-center gap-3 mt-3">
-                        <a href="https://github.com/ThomazCortez" class="text-primary"><i class="fab fa-github fs-4"></i></a>
+            
+            <!-- Scrum Master (Maior) -->
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-6 animate-on-scroll animate-fadeInUp">
+                    <div class="card scrum-master-card text-center p-4">
+                        <img src="ficheiros/media/img/thomaz.png" class="scrum-master-img mb-3" alt="Scrum Master" width="200" height="200">
+                        <h3>Thomaz Cortez</h3>
+                        <p class="text-primary fw-bold">Scrum Master e Fundador</p>
+                        <p>Com 0 anos de experiência no desenvolvimento de plataformas de comunicação, Thomaz lidera a equipa do TelePomba com paixão e inovação.</p>
+                        <div class="d-flex justify-content-center gap-3 mt-3">
+                            <a href="https://github.com/ThomazCortez" class="text-primary"><i class="fab fa-github fs-4"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         
         <!-- Desenvolvedores (10) -->
         <div class="row g-4">
@@ -655,29 +655,29 @@
                 </div>
             </div>
             
-            <!-- Últimos 2 desenvolvedores centralizados com mais espaço -->
-<div class="w-100 d-flex justify-content-center flex-wrap mt-4">
-    <!-- Desenvolvedor 9 -->
-    <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp mx-md-4" style="animation-delay: 1s">
-        <div class="card team-card text-center p-3">
-            <img src="ficheiros/media/img/rafa.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
-            <h5>Rafael Costa</h5>
-            <p class="text-primary">Logotípo e Imagens</p>
+                <!-- Últimos 2 desenvolvedores centralizados com mais espaço -->
+    <div class="w-100 d-flex justify-content-center flex-wrap mt-4">
+        <!-- Desenvolvedor 9 -->
+        <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp mx-md-4" style="animation-delay: 1s">
+            <div class="card team-card text-center p-3">
+                <img src="ficheiros/media/img/rafa.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                <h5>Rafael Costa</h5>
+                <p class="text-primary">Logotípo e Imagens</p>
+            </div>
+        </div>
+        
+        <!-- Desenvolvedor 10 -->
+        <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp mx-md-4" style="animation-delay: 1.1s">
+            <div class="card team-card text-center p-3">
+                <img src="ficheiros/media/img/nic.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
+                <h5>Nicolas Almeida</h5>
+                <p class="text-primary">Login, Registo e Logout</p>
+            </div>
         </div>
     </div>
-    
-    <!-- Desenvolvedor 10 -->
-    <div class="col-md-3 col-sm-6 animate-on-scroll animate-fadeInUp mx-md-4" style="animation-delay: 1.1s">
-        <div class="card team-card text-center p-3">
-            <img src="ficheiros/media/img/nic.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
-            <h5>Nicolas Almeida</h5>
-            <p class="text-primary">Login, Registo e Logout</p>
+            </div>
         </div>
-    </div>
-</div>
-        </div>
-    </div>
-</section>
+    </section>
 
     <!-- CTA Section -->
     <section class="hero-bg">
@@ -690,7 +690,7 @@
             </div>
         </div>
     </div>
-</section>
+    </section>
 
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
