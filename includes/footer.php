@@ -3,7 +3,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Telepomba</h3>
-                <p>Conectando pombas e telecomunicações desde 2025</p>
+                <p>A ligar pombas e telecomunicações desde 2025</p>
             </div>
             
             <div class="footer-section">
