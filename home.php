@@ -581,7 +581,7 @@ socket.on('userStoppedTyping', (data) => {
 });
 
 function showTypingIndicator(userId) {
-    // Remove any existing typing indicator
+    // Remove any existing typing indicator first
     removeTypingIndicator();
 
     // Try to fetch user info to get profile picture
@@ -609,6 +609,11 @@ function showTypingIndicator(userId) {
             `;
             
             if (messagesContainer) {
+                // Remove any existing typing indicators first
+                const existingIndicators = messagesContainer.querySelectorAll('#typingIndicator');
+                existingIndicators.forEach(indicator => indicator.remove());
+
+                // Add new typing indicator
                 messagesContainer.insertAdjacentHTML('beforeend', indicatorHtml);
                 
                 // Auto-scroll to bottom
@@ -625,9 +630,10 @@ function hideTypingIndicator() {
 }
 
 function removeTypingIndicator() {
-    const existingIndicator = document.getElementById('typingIndicator');
-    if (existingIndicator) {
-        existingIndicator.remove();
+    const messagesContainer = document.getElementById('messagesContainer');
+    if (messagesContainer) {
+        const existingIndicators = messagesContainer.querySelectorAll('#typingIndicator');
+        existingIndicators.forEach(indicator => indicator.remove());
     }
 }
 
