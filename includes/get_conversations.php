@@ -53,24 +53,29 @@ foreach ($conversations as &$conversation) { // Note the & to make it a referenc
     
     // Output conversation item
     echo '<div class="p-3 border-bottom conversation-item" 
-        data-conversation-id="'.$conversation['id_conversa'].'" 
-        style="cursor: pointer;">';
-    echo '<div class="d-flex align-items-center">';
-    echo '<img src="'.$conversation['imagem_perfil'].'" alt="'.$conversation['nome'].'" class="profile-img me-3">';
-    echo '<div class="flex-grow-1">';
-    echo '<div class="d-flex justify-content-between">';
-    echo '<h6 class="mb-0">'.$conversation['nome'].'</h6>';
-    if ($lastMessage) {
-        echo '<small class="text-muted">'.date('H:i', strtotime($lastMessage['enviado_em'])).'</small>';
-    }
-    echo '</div>';
-    if ($lastMessage) {
-        echo '<small class="text-muted text-truncate d-block">';
-        echo $lastMessage['nome_utilizador'].': '.$lastMessage['conteudo'];
-        echo '</small>';
-    }
-    echo '</div>';
-    echo '</div>';
-    echo '</div>';
+    data-conversation-id="'.$conversation['id_conversa'].'" 
+    data-conversation-name="'.htmlspecialchars($conversation['nome']).'"
+    data-conversation-type="'.$conversation['tipo'].'"
+    style="cursor: pointer;">';
+    
+echo '<div class="d-flex align-items-center">';
+echo '<img src="'.htmlspecialchars($conversation['imagem_perfil']).'" 
+          alt="'.htmlspecialchars($conversation['nome']).'" 
+          class="profile-img me-3">';
+echo '<div class="flex-grow-1">';
+echo '<div class="d-flex justify-content-between">';
+echo '<h6 class="mb-0">'.htmlspecialchars($conversation['nome']).'</h6>';
+if ($lastMessage) {
+    echo '<small class="text-muted">'.date('H:i', strtotime($lastMessage['enviado_em'])).'</small>';
+}
+echo '</div>';
+if ($lastMessage) {
+    echo '<small class="text-muted text-truncate d-block">';
+    echo htmlspecialchars($lastMessage['nome_utilizador'].': '.$lastMessage['conteudo']);
+    echo '</small>';
+}
+echo '</div>';
+echo '</div>';
+echo '</div>';
 }
 ?>

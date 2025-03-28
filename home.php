@@ -214,8 +214,16 @@ require_once 'config/database.php';
             <div class="col-md-8 p-0 d-flex flex-column animate__animated animate__fadeIn">
                 <!-- Chat header -->
                 <div class="p-3 bg-white border-bottom d-flex justify-content-between align-items-center" id="chatHeader">
-                    <div class="text-center w-100">
-                        <h5 class="m-0">Selecione um chat para começar a conversar</h5>
+                    <div class="d-flex align-items-center">
+                        <h5 class="m-0" id="chatTitle">Selecione um chat para começar a conversar</h5>
+                    </div>
+                    <div class="dropdown" id="chatSettings" style="display: none;">
+                        <button class="btn btn-link text-dark" type="button" id="chatSettingsDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" id="leaveConversationBtn">Sair da Conversa</a></li>
+                        </ul>
                     </div>
                 </div>
                 
@@ -636,6 +644,65 @@ function removeTypingIndicator() {
         existingIndicators.forEach(indicator => indicator.remove());
     }
 }
+
+// Update chat header when conversation is selected
+function updateChatHeader(conversationName) {
+    const chatTitle = document.getElementById('chatTitle');
+    const chatSettings = document.getElementById('chatSettings');
+    
+    chatTitle.textContent = conversationName;
+    chatSettings.style.display = 'block';
+}
+
+// Handle leaving conversation
+document.getElementById('leaveConversationBtn').addEventListener('click', async () => {
+    if (!activeConversationId) return;
+
+    const confirmLeave = confirm('Tem certeza que deseja sair desta conversa?');
+    if (confirmLeave) {
+        try {
+            const response = await fetch('includes/leave_conversation.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ conversationId: activeConversationId })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                // Reset chat interface
+                activeConversationId = null;
+                document.getElementById('chatTitle').textContent = 'Selecione um chat para começar a conversar';
+                document.getElementById('chatSettings').style.display = 'none';
+                document.getElementById('messageInputContainer').style.display = 'none';
+                document.getElementById('messagesContainer').innerHTML = '';
+                loadConversations();
+            } else {
+                alert(result.message || 'Erro ao sair da conversa');
+            }
+        } catch (error) {
+            console.error('Error leaving conversation:', error);
+            alert('Erro ao sair da conversa');
+        }
+    }
+});
+
+// Modify the conversation click handler to update the header
+document.getElementById('conversationsList').addEventListener('click', (e) => {
+    const conversationItem = e.target.closest('.conversation-item');
+    if (conversationItem) {
+        const conversationId = conversationItem.dataset.conversationId;
+        const conversationName = conversationItem.dataset.conversationName; // Make sure your PHP includes this data attribute
+        
+        loadMessages(conversationId);
+        updateChatHeader(conversationName);
+        
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.classList.remove('bg-light');
+        });
+        conversationItem.classList.add('bg-light');
+    }
+});
 
 
         loadConversations();
