@@ -130,6 +130,38 @@ require_once 'config/database.php';
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+.typing-dots {
+    display: inline-flex;
+    align-items: center;
+}
+
+.typing-dots span {
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-right: 2px;
+    animation: typing-dot 1.4s infinite;
+    opacity: 0.4;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing-dot {
+    0%, 60%, 100% {
+        opacity: 0.4;
+        transform: translateY(0);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(-5px);
+    }
+}
+
     </style>
 </head>
 <body>
@@ -241,6 +273,7 @@ require_once 'config/database.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
+
         const socket = io('http://localhost:3000', {
             reconnection: true,
             reconnectionAttempts: 5,
@@ -471,6 +504,132 @@ require_once 'config/database.php';
             
             return messageElement;
         }
+
+        
+        let typingTimer;
+const TYPING_TIMEOUT = 2000; // 2 seconds of inactivity
+
+document.getElementById('messageInput').addEventListener('input', (e) => {
+    const message = e.target.value.trim();
+    
+    // Only emit typing events if there's an active conversation and some text
+    if (activeConversationId && message) {
+        // Emit start typing event
+        socket.emit('startTyping', {
+            conversationId: activeConversationId,
+            userId: currentUserId
+        });
+
+        // Clear previous timer
+        clearTimeout(typingTimer);
+
+        // Set a new timer to stop typing after inactivity
+        typingTimer = setTimeout(() => {
+            socket.emit('stopTyping', {
+                conversationId: activeConversationId,
+                userId: currentUserId
+            });
+        }, TYPING_TIMEOUT);
+    }
+});
+
+// Stop typing when message is sent
+document.getElementById('sendMessageBtn').addEventListener('click', () => {
+    clearTypingState();
+});
+
+document.getElementById('messageInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        clearTypingState();
+    }
+});
+
+function clearTypingState() {
+    if (activeConversationId) {
+        clearTimeout(typingTimer);
+        socket.emit('stopTyping', {
+            conversationId: activeConversationId,
+            userId: currentUserId
+        });
+    }
+}
+
+// Typing indicator handling
+socket.on('userStartedTyping', (data) => {
+    console.log('Received userStartedTyping:', data);
+    
+    // Ensure the event is for the current active conversation
+    if (data.conversationId == activeConversationId) {
+        // Only show if it's not the current user
+        if (data.userId != currentUserId) {
+            showTypingIndicator(data.userId);
+        }
+    }
+});
+
+socket.on('userStoppedTyping', (data) => {
+    console.log('Received userStoppedTyping:', data);
+    
+    // Ensure the event is for the current active conversation
+    if (data.conversationId == activeConversationId) {
+        // Only hide if it's not the current user
+        if (data.userId != currentUserId) {
+            hideTypingIndicator(data.userId);
+        }
+    }
+});
+
+function showTypingIndicator(userId) {
+    // Remove any existing typing indicator
+    removeTypingIndicator();
+
+    // Try to fetch user info to get profile picture
+    fetch(`includes/get_user_details.php?user_id=${userId}`)
+        .then(response => response.json())
+        .then(user => {
+            const messagesContainer = document.getElementById('messagesContainer');
+            
+            const indicatorHtml = `
+                <div id="typingIndicator" class="mb-3 text-start animate__animated animate__fadeIn">
+                    <div class="d-flex justify-content-start">
+                        <img src="${user.imagem_perfil}" alt="${user.nome_utilizador}" class="profile-img me-2">
+                        <div>
+                            <div class="fw-bold">${user.nome_utilizador}</div>
+                            <div class="p-2 rounded bg-light text-muted">
+                                <div class="typing-dots">
+                                    <span>.</span>
+                                    <span>.</span>
+                                    <span>.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            if (messagesContainer) {
+                messagesContainer.insertAdjacentHTML('beforeend', indicatorHtml);
+                
+                // Auto-scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching user details:', error);
+        });
+}
+
+function hideTypingIndicator() {
+    removeTypingIndicator();
+}
+
+function removeTypingIndicator() {
+    const existingIndicator = document.getElementById('typingIndicator');
+    if (existingIndicator) {
+        existingIndicator.remove();
+    }
+}
+
 
         loadConversations();
     </script>

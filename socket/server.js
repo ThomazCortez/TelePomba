@@ -119,6 +119,26 @@ io.on('connection', async (socket) => {
                 content,
                 timestamp: new Date()
             };
+
+            // Typing indicator events
+    socket.on('startTyping', (data) => {
+        console.log('Server received startTyping:', data);
+        // Broadcast to all users in the conversation EXCEPT the sender
+        socket.to(`conversation_${data.conversationId}`).emit('userStartedTyping', {
+            conversationId: data.conversationId,
+            userId: data.userId
+        });
+    });
+
+    socket.on('stopTyping', (data) => {
+        console.log('Server received stopTyping:', data);
+        // Broadcast to all users in the conversation EXCEPT the sender
+        socket.to(`conversation_${data.conversationId}`).emit('userStoppedTyping', {
+            conversationId: data.conversationId,
+            userId: data.userId
+        });
+    });
+
             
             // Broadcast to everyone in the room (including sender)
             console.log('Broadcasting to room:', `conversation_${conversationId}`);
