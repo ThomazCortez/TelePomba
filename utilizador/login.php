@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 $_SESSION['user_id'] = $user['id_utilizador'];
                 $_SESSION['username'] = $user['nome_utilizador'];
-                $_SESSION['profile_image'] = $user['imagem_perfil'];
+                $_SESSION['imagem_perfil'] = $user['imagem_perfil'];
                 header("Location: ../home.php");
                 exit();
             } else {

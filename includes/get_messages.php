@@ -82,7 +82,7 @@ foreach ($messages as $message) {
     echo '<small class="text-muted">'.date('H:i', strtotime($message['enviado_em'])).'</small>';
     echo '</div>';
     if ($isCurrentUser) {
-        echo '<img src="'.$_SESSION['profile_image'].'" alt="You" class="profile-img ms-2">';
+        echo '<img src="'.$_SESSION['imagem_perfil'].'" alt="You" class="profile-img ms-2">';
     }
     echo '</div>';
 }

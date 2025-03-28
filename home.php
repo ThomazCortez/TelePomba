@@ -9,10 +9,21 @@ require_once 'config/database.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Clone</title>
+    <title>Chat | TelePomba</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
     <style>
+        :root {
+    --primary-color: #2a6b5f;  /* Deep forest green */
+    --secondary-color: #e9f5ec;  /* Soft pastel green */
+    --accent-color: #ff6b6b;  /* Warm contrast color */
+    --text-color: #2e3d30;  /* Dark green-gray */
+    --light-text: #ffffff;
+    --light-gray-bg: #f4faf6;  /* Lighter green-gray */
+}
+
         .chat-container {
             height: 100vh;
         }
@@ -35,66 +46,97 @@ require_once 'config/database.php';
         }
         
         .conversation-item:hover {
-            background-color: #f8f9fa !important;
-        }
+    background-color: var(--light-gray-bg) !important;
+    cursor: pointer;
+}
 
         .conversation-item.bg-light {
-            background-color: #e9ecef !important;
+            background-color: var(--secondary-color) !important;
         }
 
-        /* Loading indicator */
         .loading-messages {
             text-align: center;
             padding: 20px;
-            color: #6c757d;
+            color: var(--text-color);
         }
 
-        /* Unread message indicator */
         .unread-badge {
             width: 10px;
             height: 10px;
-        }
-        
-        /* Add to existing styles */
-        #typingIndicator {
-            height: 20px;
-            font-style: italic;
-            transition: opacity 0.3s ease;
+            background-color: var(--accent-color);
         }
 
-        .typing-dots {
-            display: inline-flex;
-            align-items: center;
+        /* Custom overrides */
+        body {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #23574d;
+    border-color: #23574d;
+}
+
+        .bg-light {
+    background-color: var(--light-gray-bg) !important;
+}
+
+        #chatHeader,
+        #messageInputContainer {
+            background-color: var(--light-text);
         }
 
-        .typing-dots span {
-            width: 5px;
-            height: 5px;
-            margin: 0 2px;
-            background-color: #6c757d;
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out;
+        .message-bubble {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    max-width: 80%;
+}
+
+        .animate-delay-1 {
+            animation-delay: 0.1s;
         }
 
-        .typing-dots span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
+        #chatHeader, #messageInputContainer {
+    background-color: var(--secondary-color);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
 
-        .typing-dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+.message-bubble.received {
+    background-color: var(--light-gray-bg);
+    color: var(--text-color);
+}
 
-        @keyframes typing {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
+.input-group input {
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.input-group .btn {
+    border-radius: 20px;
+}
+
+.conversation-item {
+    transition: background 0.3s ease;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
     </style>
 </head>
 <body>
     <div class="container-fluid chat-container">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-4 bg-light p-0 border-end">
+            <!-- Sidebar with animation -->
+            <div class="col-md-4 bg-light p-0 border-end animate__animated animate__slideInLeft">
                 <div class="d-flex flex-column h-100">
                     <div class="p-3 bg-white border-bottom d-flex justify-content-between align-items-center">
                         <div class="dropdown">
@@ -102,7 +144,7 @@ require_once 'config/database.php';
                                 <?php if (!empty($_SESSION['imagem_perfil'])): ?>
                                     <img src="<?= htmlspecialchars($_SESSION['imagem_perfil']) ?>" alt="Profile" class="profile-img me-2">
                                 <?php else: ?>
-                                    <img src="ficheiros/dashboard/dashboard/uploads/default_profile_image.jpg" alt="Profile" class="profile-img me-2">
+                                    <img src="ficheiros/dashboard/dashboard/uploads/default_imagem_perfil.jpg" alt="Profile" class="profile-img me-2">
                                 <?php endif; ?>
                                 <span><?= htmlspecialchars($_SESSION['username']) ?></span>
                             </button>
@@ -112,14 +154,14 @@ require_once 'config/database.php';
                             </ul>
                         </div>
                         <div>
-                            <button class="btn btn-sm btn-outline-secondary" id="newChatBtn">
+                            <button class="btn btn-sm btn-primary" id="newChatBtn">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
                     </div>
 
                     <!-- Search -->
-                    <div class="p-2 bg-light border-bottom">
+                    <div class="p-2 bg-light border-bottom animate__animated animate__fadeIn">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search or start new chat">
                             <button class="btn btn-outline-secondary" type="button">
@@ -135,8 +177,8 @@ require_once 'config/database.php';
                 </div>
             </div>
             
-            <!-- Chat area -->
-            <div class="col-md-8 p-0 d-flex flex-column">
+            <!-- Chat area with animation -->
+            <div class="col-md-8 p-0 d-flex flex-column animate__animated animate__fadeIn">
                 <!-- Chat header -->
                 <div class="p-3 bg-white border-bottom d-flex justify-content-between align-items-center" id="chatHeader">
                     <div class="text-center w-100">
@@ -162,9 +204,9 @@ require_once 'config/database.php';
         </div>
     </div>
     
-    <!-- New Chat Modal -->
+    <!-- New Chat Modal with animation -->
     <div class="modal fade" id="newChatModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog animate__animated animate__zoomIn">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">New Chat</h5>
@@ -228,6 +270,11 @@ require_once 'config/database.php';
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('conversationsList').innerHTML = html;
+                    // Add animations to conversation items
+                    document.querySelectorAll('.conversation-item').forEach((item, index) => {
+                        item.classList.add('animate__animated', 'animate__fadeInUp');
+                        item.style.animationDelay = `${index * 0.1}s`;
+                    });
                 });
         }
 
@@ -372,6 +419,7 @@ require_once 'config/database.php';
                 .then(html => {
                     document.getElementById('messagesContainer').innerHTML = html;
                     document.getElementById('messageInputContainer').style.display = 'block';
+                    document.getElementById('messageInputContainer').classList.add('animate__animated', 'animate__slideInUp');
                     
                     const messagesContainer = document.getElementById('messagesContainer');
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -401,7 +449,7 @@ require_once 'config/database.php';
 
         function createMessageElement(data, isCurrentUser) {
             const messageElement = document.createElement('div');
-            messageElement.className = `mb-3 ${isCurrentUser ? 'text-end' : 'text-start'}`;
+            messageElement.className = `mb-3 ${isCurrentUser ? 'text-end' : 'text-start'} animate__animated animate__fadeIn`;
             
             messageElement.innerHTML = `
                 <div class="d-flex ${isCurrentUser ? 'justify-content-end' : 'justify-content-start'}">
@@ -416,7 +464,7 @@ require_once 'config/database.php';
                         <small class="text-muted">${new Date(data.timestamp).toLocaleTimeString()}</small>
                     </div>
                     ${isCurrentUser ? `
-                        <img src="<?= $_SESSION['profile_image'] ?>" alt="You" class="profile-img ms-2">
+                        <img src="<?= $_SESSION['imagem_perfil'] ?>" alt="You" class="profile-img ms-2">
                     ` : ''}
                 </div>
             `;
