@@ -45,14 +45,11 @@ if ($conversation['tipo'] === 'privada') {
 }
 
 // Update chat header
-echo '<script>';
-echo 'document.getElementById("chatHeader").innerHTML = `';
-echo '<div class="d-flex align-items-center">';
-echo '<img src="'.$conversation['imagem_perfil'].'" alt="'.$conversation['nome'].'" class="profile-img me-2">';
-echo '<h5 class="m-0">'.$conversation['nome'].'</h5>';
-echo '</div>';
-echo 'document.getElementById("chatHeader").dataset.conversationId = "'.$conversationId.'";';
-echo '</script>';
+echo '<div id="chatHeaderData" 
+    data-conversation-id="'.$conversationId.'" 
+    data-conversation-name="'.htmlspecialchars($conversation['nome']).'"
+    data-conversation-image="'.htmlspecialchars($conversation['imagem_perfil']).'"
+    style="display:none;"></div>';
 
 // Get messages
 $stmt = $pdo->prepare("
@@ -76,8 +73,24 @@ foreach ($messages as $message) {
     if (!$isCurrentUser) {
         echo '<div class="fw-bold">'.$message['nome_utilizador'].'</div>';
     }
-    echo '<div class="p-2 rounded '.($isCurrentUser ? 'bg-primary text-white' : 'bg-white').'">';
-    echo $message['conteudo'];
+    // Inside the message loop
+    $messageType = $message['tipo_mensagem'] ?? 'text';
+    switch ($messageType) {
+        case 'image':
+            $content = '<img src="'.$message['conteudo'].'" class="img-fluid" style="max-width: 300px; border-radius: 10px;">';
+            break;
+        case 'video':
+            $content = '<video controls style="max-width: 300px; border-radius: 10px;"><source src="'.$message['conteudo'].'"></video>';
+            break;
+        case 'audio':
+            $content = '<audio controls><source src="'.$message['conteudo'].'"></audio>';
+            break;
+        default:
+            $content = htmlspecialchars($message['conteudo']);
+    }
+
+    echo '<div class="p-2 rounded '.($isCurrentUser ? 'bg-primary text-white' : 'bg-light').'">';
+    echo $content; // CORRECTED LINE - use the generated content
     echo '</div>';
     echo '<small class="text-muted">'.date('H:i', strtotime($message['enviado_em'])).'</small>';
     echo '</div>';

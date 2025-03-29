@@ -9,9 +9,9 @@ const server = http.createServer(app);
 // Configure CORS properly
 const io = socketIo(server, {
     cors: {
-      origin: ["http://localhost", "http://localhost:80"],
-      methods: ["GET", "POST"],
-      credentials: true
+        origin: ["http://localhost", "http://localhost:80"],
+        methods: ["GET", "POST"],
+        credentials: true
     }
 });
 
@@ -23,7 +23,7 @@ const dbConfig = {
     database: 'telepomba'
 };
 
-// Add this helper function (put it with your other database functions)
+// Helper functions
 async function updateUserStatus(userId, status) {
     try {
         const conn = await mysql.createConnection(dbConfig);
@@ -52,78 +52,80 @@ async function getUserName(userId) {
     }
 }
 
-
 // Store online users
 const onlineUsers = new Map();
 
 io.on('connection', async (socket) => {
     console.log('New client connected');
-    
-    // Authenticate user
+
+    // Authentication handler
     socket.on('authenticate', async (userId) => {
         onlineUsers.set(userId, socket.id);
         io.emit('userStatusChanged', { userId, status: 'online' });
     });
 
+    // Logout handler
     socket.on('userLogout', (userId) => {
         onlineUsers.delete(userId);
         io.emit('userStatusChanged', { userId, status: 'offline' });
-        
-        // Update database status if you want to persist it
         updateUserStatus(userId, 'offline');
     });
-    
-    
-    // Join conversation
+
+    // Conversation handler
     socket.on('joinConversation', (conversationId) => {
-        // Leave all conversation rooms except the new one
         const rooms = Object.keys(socket.rooms);
         rooms.forEach(room => {
             if (room !== socket.id && room.startsWith('conversation_')) {
                 socket.leave(room);
             }
         });
-        // Join the new conversation room
         socket.join(`conversation_${conversationId}`);
         console.log(`User ${socket.id} joined conversation ${conversationId}`);
     });
-    
-    // Send message
+
+    // Message handler (FIXED)
     socket.on('sendMessage', async (data) => {
         try {
-            const { conversationId, senderId, content } = data;
-            console.log('Saving message to DB:', data);
+            const { conversationId, senderId, content, messageType = 'text' } = data;
             
+            if (!conversationId) {
+                throw new Error('Missing conversationId');
+            }
+
             const conn = await mysql.createConnection(dbConfig);
             
-            // Save to database
             await conn.execute(
-                'INSERT INTO mensagens (id_conversa, id_remetente, conteudo) VALUES (?, ?, ?)',
-                [conversationId, senderId, content]
+                'INSERT INTO mensagens (id_conversa, id_remetente, conteudo, tipo_mensagem) VALUES (?, ?, ?, ?)',
+                [conversationId, senderId, content, messageType]
             );
-            
-            // Get sender info
+
             const [user] = await conn.execute(
                 'SELECT nome_utilizador, imagem_perfil FROM utilizadores WHERE id_utilizador = ?',
                 [senderId]
             );
             
             conn.end();
-            
-            // Create message data object
+
             const messageData = {
                 conversationId,
                 senderId,
                 senderName: user[0].nome_utilizador,
                 senderImage: user[0].imagem_perfil,
                 content,
+                messageType,
                 timestamp: new Date()
             };
 
-            // Typing indicator events
+            io.to(`conversation_${conversationId}`).emit('newMessage', messageData);
+        } catch (error) {
+            console.error('Error sending message:', error.message);
+            socket.emit('messageError', { error: error.message });
+        }
+    });
+
+    // Typing indicators (MOVED OUTSIDE OF sendMessage HANDLER)
     socket.on('startTyping', (data) => {
-        console.log('Server received startTyping:', data);
-        // Broadcast to all users in the conversation EXCEPT the sender
+        if (!data.conversationId) return;
         socket.to(`conversation_${data.conversationId}`).emit('userStartedTyping', {
             conversationId: data.conversationId,
             userId: data.userId
@@ -131,29 +133,17 @@ io.on('connection', async (socket) => {
     });
 
     socket.on('stopTyping', (data) => {
-        console.log('Server received stopTyping:', data);
-        // Broadcast to all users in the conversation EXCEPT the sender
+        if (!data.conversationId) return;
         socket.to(`conversation_${data.conversationId}`).emit('userStoppedTyping', {
             conversationId: data.conversationId,
             userId: data.userId
         });
     });
 
-            
-            // Broadcast to everyone in the room (including sender)
-            console.log('Broadcasting to room:', `conversation_${conversationId}`);
-            io.to(`conversation_${conversationId}`).emit('newMessage', messageData);
-            
-        } catch (error) {
-            console.error('Error sending message:', error);
-        }
-    });
-    
-    // Disconnect
+    // Disconnect handler
     socket.on('disconnect', () => {
         console.log('Client disconnected');
-        // Find and remove user from onlineUsers
-        for (let [userId, socketId] of onlineUsers.entries()) {
+        for (const [userId, socketId] of onlineUsers.entries()) {
             if (socketId === socket.id) {
                 onlineUsers.delete(userId);
                 io.emit('userStatusChanged', { userId, status: 'offline' });
@@ -164,6 +154,6 @@ io.on('connection', async (socket) => {
 });
 
 const PORT = 3000;
-server.listen(PORT, '0.0.0.0', () => {  // Explicitly listen on all interfaces
-  console.log(`Socket server running on port ${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Socket server running on port ${PORT}`);
 });

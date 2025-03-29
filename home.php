@@ -163,6 +163,25 @@ require_once 'config/database.php';
     }
 }
 
+/* Add to existing styles */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+video, audio {
+    max-width: 100%;
+    background: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+}
+
+video {
+    max-height: 400px;
+    border-radius: 15px;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -235,6 +254,10 @@ require_once 'config/database.php';
                 <!-- Message input -->
                 <div class="p-3 bg-white border-top" id="messageInputContainer" style="display: none;">
                     <div class="input-group">
+                        <input type="file" id="fileInput" class="d-none" accept="image/*, video/*, audio/*">
+                        <button class="btn btn-outline-secondary" type="button" id="attachFileBtn">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
                         <input type="text" class="form-control" placeholder="Escreva uma mensagem" id="messageInput">
                         <button class="btn btn-primary" type="button" id="sendMessageBtn">
                             <i class="fas fa-paper-plane"></i>
@@ -469,6 +492,13 @@ require_once 'config/database.php';
                     if (activeConversationId) {
                         socket.emit('leaveConversation', activeConversationId);
                     }
+
+                    // Add this to your loadMessages function:
+                    const headerData = document.getElementById('chatHeaderData');
+                    if (headerData) {
+                        document.getElementById('chatTitle').textContent = headerData.dataset.conversationName;
+                        document.getElementById('chatSettings').style.display = 'block';
+                    }
                     
                     socket.emit('joinConversation', conversationId);
                     activeConversationId = conversationId;
@@ -490,29 +520,52 @@ require_once 'config/database.php';
         });
 
         function createMessageElement(data, isCurrentUser) {
-            const messageElement = document.createElement('div');
-            messageElement.className = `mb-3 ${isCurrentUser ? 'text-end' : 'text-start'} animate__animated animate__fadeIn`;
-            
-            messageElement.innerHTML = `
-                <div class="d-flex ${isCurrentUser ? 'justify-content-end' : 'justify-content-start'}">
-                    ${!isCurrentUser ? `
-                        <img src="${data.senderImage}" alt="${data.senderName}" class="profile-img me-2">
-                    ` : ''}
-                    <div>
-                        ${!isCurrentUser ? `<div class="fw-bold">${data.senderName}</div>` : ''}
-                        <div class="p-2 rounded ${isCurrentUser ? 'bg-primary text-white' : 'bg-white'}">
-                            ${data.content}
-                        </div>
-                        <small class="text-muted">${new Date(data.timestamp).toLocaleTimeString()}</small>
-                    </div>
-                    ${isCurrentUser ? `
-                        <img src="<?= $_SESSION['imagem_perfil'] ?>" alt="You" class="profile-img ms-2">
-                    ` : ''}
+    const messageElement = document.createElement('div');
+    messageElement.className = `mb-3 ${isCurrentUser ? 'text-end' : 'text-start'} animate__animated animate__fadeIn`;
+
+    let contentHtml;
+    switch(data.messageType) {
+        case 'image':
+            contentHtml = `<img src="${data.content}" class="img-fluid" style="max-width: 300px; border-radius: 10px;">`;
+            break;
+        case 'video':
+            contentHtml = `
+                <video controls style="max-width: 300px; border-radius: 10px;">
+                    <source src="${data.content}" type="video/mp4">
+                    Your browser does not support video tag
+                </video>`;
+            break;
+        case 'audio':
+            contentHtml = `
+                <audio controls>
+                    <source src="${data.content}" type="audio/mpeg">
+                    Your browser does not support audio element
+                </audio>`;
+            break;
+        default:
+            contentHtml = data.content;
+    }
+
+    messageElement.innerHTML = `
+        <div class="d-flex ${isCurrentUser ? 'justify-content-end' : 'justify-content-start'}">
+            ${!isCurrentUser ? `
+                <img src="${data.senderImage}" alt="${data.senderName}" class="profile-img me-2">
+            ` : ''}
+            <div>
+                ${!isCurrentUser ? `<div class="fw-bold">${data.senderName}</div>` : ''}
+                <div class="p-2 rounded ${isCurrentUser ? 'bg-primary text-white' : 'bg-light'}">
+                    ${contentHtml}
                 </div>
-            `;
-            
-            return messageElement;
-        }
+                <small class="text-muted">${new Date(data.timestamp).toLocaleTimeString()}</small>
+            </div>
+            ${isCurrentUser ? `
+                <img src="<?= $_SESSION['imagem_perfil'] ?>" alt="You" class="profile-img ms-2">
+            ` : ''}
+        </div>
+    `;
+
+    return messageElement;
+}
 
         
         let typingTimer;
@@ -701,6 +754,38 @@ document.getElementById('conversationsList').addEventListener('click', (e) => {
             item.classList.remove('bg-light');
         });
         conversationItem.classList.add('bg-light');
+    }
+});
+
+// Add file upload handler
+document.getElementById('attachFileBtn').addEventListener('click', () => {
+    document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file || !activeConversationId) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const response = await fetch('includes/upload_file.php', {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+
+        if (result.success) {
+            socket.emit('sendMessage', {
+                conversationId: activeConversationId,
+                senderId: currentUserId,
+                content: result.filePath,
+                messageType: result.fileType
+            });
+        }
+    } catch (error) {
+        console.error('File upload error:', error);
     }
 });
 
