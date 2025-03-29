@@ -93,14 +93,6 @@ require_once 'config/database.php';
              background-color: var(--light-text);
         }
 
-        .message-bubble {
-            background-color: var(--primary-color);
-            color: var(--light-text);
-            border-radius: 1rem;
-            padding: 0.5rem 1rem;
-            max-width: 80%;
-        }
-
                 .animate-delay-1 {
                     animation-delay: 0.1s;
                 }
@@ -108,11 +100,6 @@ require_once 'config/database.php';
                 #chatHeader, #messageInputContainer {
             background-color: var(--secondary-color);
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .message-bubble.received {
-            background-color: var(--light-gray-bg);
-            color: var(--text-color);
         }
 
         .input-group input {
@@ -178,6 +165,31 @@ video, audio {
 video {
     max-height: 400px;
     border-radius: 15px;
+}
+
+.user-message {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+.other-message {
+    background-color: #f1f0f0 !important; /* Light grey */
+    color: var(--text-color) !important;
+}
+
+.user-message, .other-message {
+    border-radius: 1rem;
+    padding: 0.75rem 1.25rem;
+    max-width: 150%;
+    word-break: break-word;
+}
+
+.user-message {
+    border-bottom-right-radius: 4px;
+}
+
+.other-message {
+    border-bottom-left-radius: 4px;
 }
 
 
@@ -546,6 +558,7 @@ video {
             contentHtml = data.content;
     }
 
+    // In the message element creation, change the class:
     messageElement.innerHTML = `
         <div class="d-flex ${isCurrentUser ? 'justify-content-end' : 'justify-content-start'}">
             ${!isCurrentUser ? `
@@ -553,7 +566,7 @@ video {
             ` : ''}
             <div>
                 ${!isCurrentUser ? `<div class="fw-bold">${data.senderName}</div>` : ''}
-                <div class="p-2 rounded ${isCurrentUser ? 'bg-primary text-white' : 'bg-light'}">
+                <div class="p-2 rounded ${isCurrentUser ? 'user-message' : 'other-message'}">
                     ${contentHtml}
                 </div>
                 <small class="text-muted">${new Date(data.timestamp).toLocaleTimeString()}</small>

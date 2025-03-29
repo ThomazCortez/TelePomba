@@ -89,7 +89,7 @@ foreach ($messages as $message) {
             $content = htmlspecialchars($message['conteudo']);
     }
 
-    echo '<div class="p-2 rounded '.($isCurrentUser ? 'bg-primary text-white' : 'bg-light').'">';
+    echo '<div class="p-2 rounded '.($isCurrentUser ? 'user-message' : 'other-message').'">';
     echo $content; // CORRECTED LINE - use the generated content
     echo '</div>';
     echo '<small class="text-muted">'.date('H:i', strtotime($message['enviado_em'])).'</small>';
