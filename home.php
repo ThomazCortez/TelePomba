@@ -303,7 +303,9 @@ video {
                     </div>
                     <div class="mb-3" id="groupNameContainer" style="display: none;">
                         <label class="form-label">Nome do grupo:</label>
-                        <input type="text" class="form-control" id="groupNameInput">
+                        <input type="text" class="form-control" id="groupNameInput" required>
+                        <label class="form-label">Foto do grupo (opcional):</label>
+                        <input type="file" class="form-control" id="groupPhotoInput" accept="image/*">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -423,43 +425,50 @@ const socket = io('https://703b-95-92-242-31.ngrok-free.app', {
         });
 
         document.getElementById('createChatBtn').addEventListener('click', async () => {
-            const chatType = document.getElementById('chatType').value;
-            const groupName = chatType === 'group' ? document.getElementById('groupNameInput').value.trim() : null;
-            
-            if (chatType === 'group' && !groupName) {
-                alert('Please enter a group name');
-                return;
-            }
-            
-            if (participants.size === 0) {
-                alert('Please add at least one participant');
-                return;
-            }
-            
-            try {
-                const response = await fetch('includes/create_conversation.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        type: chatType,
-                        participants: Array.from(participants),
-                        groupName: groupName
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    loadConversations();
-                    bootstrap.Modal.getInstance(document.getElementById('newChatModal')).hide();
-                } else {
-                    alert(result.message || 'Error creating conversation');
-                }
-            } catch (error) {
-                console.error('Error creating conversation:', error);
-                alert('Error creating conversation');
-            }
+    const chatType = document.getElementById('chatType').value;
+    const groupName = chatType === 'group' ? document.getElementById('groupNameInput').value.trim() : null;
+    const groupPhoto = document.getElementById('groupPhotoInput').files[0];
+
+    if (chatType === 'group' && !groupName) {
+        alert('Por favor insira um nome para o grupo');
+        return;
+    }
+    
+    if (participants.size === 0) {
+        alert('Por favor adicione pelo menos um participante');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('type', chatType);
+    formData.append('participants', JSON.stringify(Array.from(participants)));
+    
+    if (chatType === 'group') {
+        formData.append('groupName', groupName);
+        if (groupPhoto) {
+            formData.append('groupPhoto', groupPhoto);
+        }
+    }
+
+    try {
+        const response = await fetch('includes/create_conversation.php', {
+            method: 'POST',
+            body: formData
         });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            loadConversations();
+            bootstrap.Modal.getInstance(document.getElementById('newChatModal')).hide();
+        } else {
+            alert(result.message || 'Erro ao criar conversa');
+        }
+    } catch (error) {
+        console.error('Erro ao criar conversa:', error);
+        alert('Erro ao criar conversa');
+    }
+});
 
         socket.on('newMessage', (data) => {
             console.log('Received message:', data);
