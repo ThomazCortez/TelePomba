@@ -318,7 +318,7 @@ video {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
 
-const socket = io('https://c050-95-92-242-31.ngrok-free.app', {
+const socket = io('https://703b-95-92-242-31.ngrok-free.app', {
     reconnection: true,
     transports: ['websockets', 'polling']
 });

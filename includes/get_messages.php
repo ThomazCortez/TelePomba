@@ -45,10 +45,11 @@ if ($conversation['tipo'] === 'privada') {
 }
 
 // Update chat header
+$image = $conversation['imagem_perfil'] ?? '';
 echo '<div id="chatHeaderData" 
-    data-conversation-id="'.$conversationId.'" 
-    data-conversation-name="'.htmlspecialchars($conversation['nome']).'"
-    data-conversation-image="'.htmlspecialchars($conversation['imagem_perfil']).'"
+    data-conversation-id="' . $conversationId . '" 
+    data-conversation-name="' . htmlspecialchars($conversation['nome']) . '"
+    data-conversation-image="' . htmlspecialchars($image) . '"
     style="display:none;"></div>';
 
 // Get messages
