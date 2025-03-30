@@ -318,12 +318,11 @@ video {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
 
-        const socket = io('http://localhost:3000', {
-            reconnection: true,
-            reconnectionAttempts: 5,
-            reconnectionDelay: 1000,
-            transports: ['websocket', 'polling']
-        });
+        // For device 192.168.1.240 (server):
+const socket = io('http://192.168.1.240:3000', {
+    reconnection: true,
+    transports: ['websocket', 'polling']
+});
 
         socket.on('connect', () => {
             console.log('Connected to Socket.io server');
