@@ -318,10 +318,9 @@ video {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
 
-        // For device 192.168.1.240 (server):
-const socket = io('http://192.168.1.240:3000', {
+const socket = io('https://c050-95-92-242-31.ngrok-free.app', {
     reconnection: true,
-    transports: ['websocket', 'polling']
+    transports: ['websockets', 'polling']
 });
 
         socket.on('connect', () => {
