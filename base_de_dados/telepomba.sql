@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 30-Mar-2025 às 14:31
+-- Tempo de geração: 30-Mar-2025 às 23:29
 -- Versão do servidor: 8.3.0
 -- versão do PHP: 8.2.18
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `conversas` (
   `imagem_grupo` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_conversa`),
   KEY `criado_por` (`criado_por`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `conversas`
@@ -51,7 +51,11 @@ INSERT INTO `conversas` (`id_conversa`, `nome`, `tipo`, `criado_por`, `criado_em
 (4, 'abc', 'grupo', 5, '2025-03-25 23:38:20', 'ficheiros/media/groups/group_67e33e6c248a3.jpg', NULL),
 (5, 'Test2', 'grupo', 5, '2025-03-27 23:32:07', 'ficheiros/media/index/default.png', NULL),
 (6, NULL, 'privada', 5, '2025-03-28 16:38:59', 'ficheiros/media/index/default.png', NULL),
-(8, 'ABC', 'grupo', 5, '2025-03-28 17:08:36', 'ficheiros/media/index/default.png', NULL);
+(8, 'ABC', 'grupo', 5, '2025-03-28 17:08:36', 'ficheiros/media/index/default.png', NULL),
+(9, 'Test', 'grupo', 5, '2025-03-30 18:55:38', 'ficheiros/media/index/default.png', NULL),
+(10, 'pluh', 'grupo', 5, '2025-03-30 19:42:18', 'ficheiros/media/index/default.png', NULL),
+(11, 'Skibidi', 'grupo', 5, '2025-03-30 20:01:35', 'ficheiros/media/groups/67e9a31f1de9d_gfoyUJWR_400x400.jpg', NULL),
+(12, 'Coding', 'grupo', 5, '2025-03-30 20:39:07', 'ficheiros/media/groups/67e9abebc22e8_coding-background-9izlympnd0ovmpli.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -63,14 +67,14 @@ DROP TABLE IF EXISTS `mensagens`;
 CREATE TABLE IF NOT EXISTS `mensagens` (
   `id_mensagem` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_conversa` bigint UNSIGNED NOT NULL,
-  `id_remetente` bigint UNSIGNED NOT NULL,
+  `id_remetente` bigint UNSIGNED DEFAULT NULL,
   `conteudo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `enviado_em` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `tipo_mensagem` enum('text','image','video','audio') COLLATE utf8mb4_general_ci DEFAULT 'text',
+  `tipo_mensagem` enum('text','image','video','audio','system') COLLATE utf8mb4_general_ci DEFAULT 'text',
   PRIMARY KEY (`id_mensagem`),
   KEY `id_conversa` (`id_conversa`),
   KEY `id_remetente` (`id_remetente`)
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `mensagens`
@@ -212,7 +216,55 @@ INSERT INTO `mensagens` (`id_mensagem`, `id_conversa`, `id_remetente`, `conteudo
 (133, 6, 5, 'ola?', '2025-03-30 14:06:29', 'text'),
 (134, 6, 5, 'yeejk', '2025-03-30 14:21:18', 'text'),
 (135, 1, 6, 'AAAAA', '2025-03-30 14:26:23', 'text'),
-(136, 1, 5, 'bar', '2025-03-30 14:30:08', 'text');
+(136, 1, 5, 'bar', '2025-03-30 14:30:08', 'text'),
+(137, 6, 5, 'hellooo', '2025-03-30 14:37:31', 'text'),
+(138, 6, 5, 'tu ccha cha tu tu cha', '2025-03-30 14:37:58', 'text'),
+(139, 6, 6, 'lalala. lalala!', '2025-03-30 14:41:03', 'text'),
+(140, 6, 5, 'what', '2025-03-30 16:19:34', 'text'),
+(141, 6, 6, 'wassap', '2025-03-30 16:20:39', 'text'),
+(142, 6, 6, 'OMG', '2025-03-30 16:20:42', 'text'),
+(143, 6, 5, 'HAHA', '2025-03-30 16:20:49', 'text'),
+(144, 6, 6, 'YESSSSS', '2025-03-30 16:20:53', 'text'),
+(145, 6, 5, 'glu', '2025-03-30 16:21:27', 'text'),
+(146, 6, 5, 'uploads/67e96f9611b58.jpg', '2025-03-30 16:21:44', 'image'),
+(147, 6, 6, 'hugvhfufu', '2025-03-30 16:22:43', 'text'),
+(148, 6, 5, 'zzzszzzsszsz', '2025-03-30 16:22:56', 'text'),
+(149, 6, 6, 'Hi there', '2025-03-30 18:46:46', 'text'),
+(150, 6, 5, 'hey', '2025-03-30 18:48:39', 'text'),
+(151, 6, 5, 'wassup dude', '2025-03-30 18:48:44', 'text'),
+(152, 6, 6, 'sup', '2025-03-30 18:48:52', 'text'),
+(153, 6, 6, 'I\'m good and you?', '2025-03-30 18:48:58', 'text'),
+(154, 6, 5, 'im doiing well!', '2025-03-30 18:49:06', 'text'),
+(155, 6, 5, 'kumalala', '2025-03-30 18:58:15', 'text'),
+(156, 6, 6, 'uploads/67e994545f3af.mp4', '2025-03-30 18:58:30', 'video'),
+(157, 9, 6, 'Sup', '2025-03-30 19:03:23', 'text'),
+(158, 9, 5, 'Sup!', '2025-03-30 19:03:29', 'text'),
+(159, 9, 6, 'Working?', '2025-03-30 19:03:38', 'text'),
+(160, 9, 5, 'Yes! Let me refresh...', '2025-03-30 19:03:46', 'text'),
+(161, 9, 5, 'Working!', '2025-03-30 19:03:58', 'text'),
+(162, 9, 5, 'Now im leaving', '2025-03-30 19:05:46', 'text'),
+(163, 9, 6, 'nooo...', '2025-03-30 19:05:51', 'text'),
+(164, 9, 6, ':( bye', '2025-03-30 19:06:22', 'text'),
+(165, 6, 5, 'WHY U LEAVE THE GROUP MAN', '2025-03-30 19:06:46', 'text'),
+(166, 6, 6, '>:)', '2025-03-30 19:07:06', 'text'),
+(167, 6, 5, '🩻🩻', '2025-03-30 19:07:51', 'text'),
+(168, 6, 6, '💀💀', '2025-03-30 19:08:07', 'text'),
+(169, 6, 5, 'como e que ee', '2025-03-30 19:08:53', 'text'),
+(170, 6, 5, 'oh no', '2025-03-30 19:09:03', 'text'),
+(171, 6, 6, '?', '2025-03-30 19:09:26', 'text'),
+(172, 6, 5, 'nothin', '2025-03-30 19:09:31', 'text'),
+(173, 6, 6, 'pluh', '2025-03-30 19:19:16', 'text'),
+(174, 6, 6, 'wazzaaap!', '2025-03-30 19:53:52', 'text'),
+(175, 6, 6, 'uploads/67e9a168aaf0e.mp4', '2025-03-30 19:54:18', 'video'),
+(176, 6, 5, 'lol', '2025-03-30 19:54:53', 'text'),
+(177, 6, 6, 'uploads/67e9a1d3b7ed6.mp4', '2025-03-30 19:56:05', 'video'),
+(178, 11, 6, 'Kazzio?', '2025-03-30 20:10:00', 'text'),
+(179, 11, 5, 'n', '2025-03-30 20:10:07', 'text'),
+(180, 11, 6, 'Po crl', '2025-03-30 20:22:18', 'text'),
+(183, 11, NULL, '🚪 Thomaz123 saiu da conversa', '2025-03-30 20:34:30', 'system'),
+(184, 11, NULL, '🚪 Cortez123 saiu da conversa', '2025-03-30 20:35:20', 'system'),
+(185, 12, 5, 'we love coding!', '2025-03-30 20:39:18', 'text'),
+(186, 6, 5, '💀💀💀💀💀', '2025-03-30 23:00:47', 'text');
 
 -- --------------------------------------------------------
 
@@ -229,23 +281,45 @@ CREATE TABLE IF NOT EXISTS `participantes_conversa` (
   PRIMARY KEY (`id_participante`),
   KEY `id_conversa` (`id_conversa`),
   KEY `id_utilizador` (`id_utilizador`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `participantes_conversa`
 --
 
 INSERT INTO `participantes_conversa` (`id_participante`, `id_conversa`, `id_utilizador`, `entrou_em`) VALUES
-(3, 2, 6, '2025-03-25 21:16:05'),
-(6, 3, 6, '2025-03-25 23:36:13'),
-(8, 4, 6, '2025-03-25 23:38:20'),
-(10, 5, 6, '2025-03-27 23:32:07'),
 (11, 5, 7, '2025-03-27 23:32:07'),
 (12, 5, 10, '2025-03-27 23:32:07'),
 (13, 6, 5, '2025-03-28 16:38:59'),
 (14, 6, 6, '2025-03-28 16:38:59'),
-(15, 8, 5, '2025-03-28 17:08:36'),
-(16, 8, 6, '2025-03-28 17:08:36');
+(23, 12, 5, '2025-03-30 20:39:07'),
+(24, 12, 6, '2025-03-30 20:39:07');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `password_resets`
+--
+
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Token hashado com SHA-256',
+  `expires_at` datetime NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_email` (`email`),
+  KEY `idx_token` (`token`),
+  KEY `idx_expiration` (`expires_at`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `password_resets`
+--
+
+INSERT INTO `password_resets` (`id`, `email`, `token`, `expires_at`, `created_at`) VALUES
+(1, 'thomazbarrago@gmail.com', 'd554da3e2e1715d1b549d7a27ac457d63dc3de9f98ee90ce152206a2e7530409', '2025-03-31 00:19:08', '2025-03-30 23:19:08');
 
 -- --------------------------------------------------------
 
@@ -283,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `utilizadores` (
   PRIMARY KEY (`id_utilizador`),
   UNIQUE KEY `id_utilizador` (`id_utilizador`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `utilizadores`
@@ -294,7 +368,8 @@ INSERT INTO `utilizadores` (`id_utilizador`, `nome_utilizador`, `palavra_passe`,
 (6, 'Cortez123', '$2y$10$HTwHwJSFrvaSqx/PI70LBO55py4GvWoF5hkvrLY7STubYWVkESfQe', 'cortez123@gmail.com', 'ficheiros/media/profiles/67e317969bacf.png', NULL, 'offline', '2025-03-25 20:52:38', '2025-03-25 20:52:38', '2025-03-25 20:52:38'),
 (7, 'Faria123', '$2y$10$h7uzcOJzZYGlgSXNL/5Z3.8w7b3VG3Vhs8fBUR2.JshjIJWa.yyzO', 'Faria123@gmail.com', 'ficheiros/media/index/default.png', NULL, 'offline', '2025-03-26 15:03:00', '2025-03-26 15:03:00', '2025-03-26 15:03:00'),
 (10, 'Barrago123', '$2y$10$8wKuGosMbam/XXPoBgk21.mcI8XiOoeDCfWmY8Ti3drBDHULQpAm2', 'barrago123@gmail.com', 'ficheiros/media/index/default.png', NULL, 'offline', '2025-03-26 15:38:16', '2025-03-26 15:38:16', '2025-03-26 15:38:16'),
-(11, 'contaio123', '$2y$10$o3oPATpCZVkp6RLGkfs5bOGe9F7NrGTfLBVVLOfdM2.HdhAi3ferC', 'contaio123@gmail.com', 'ficheiros/media/profiles/default_profile_image.jpg', NULL, 'offline', '2025-03-29 22:14:27', '2025-03-29 22:14:27', '2025-03-29 22:14:27');
+(11, 'contaio123', '$2y$10$o3oPATpCZVkp6RLGkfs5bOGe9F7NrGTfLBVVLOfdM2.HdhAi3ferC', 'contaio123@gmail.com', 'ficheiros/media/profiles/default_profile_image.jpg', NULL, 'offline', '2025-03-29 22:14:27', '2025-03-29 22:14:27', '2025-03-29 22:14:27'),
+(12, 'nigger', '$2y$10$Idzy9/KvANWb/vmbAYH9yey7ngd2f3Z70hlbEa461eO7NLJEnOkxG', 'mvieiras2009@hotmail.com', 'uploads/1743361089_Dado.png', '', 'offline', '2025-03-30 18:58:09', '2025-03-30 18:57:29', '2025-03-30 18:57:29');
 
 --
 -- Restrições para despejos de tabelas
@@ -319,6 +394,12 @@ ALTER TABLE `mensagens`
 ALTER TABLE `participantes_conversa`
   ADD CONSTRAINT `participantes_conversa_ibfk_1` FOREIGN KEY (`id_conversa`) REFERENCES `conversas` (`id_conversa`),
   ADD CONSTRAINT `participantes_conversa_ibfk_2` FOREIGN KEY (`id_utilizador`) REFERENCES `utilizadores` (`id_utilizador`);
+
+--
+-- Limitadores para a tabela `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD CONSTRAINT `password_resets_ibfk_1` FOREIGN KEY (`email`) REFERENCES `utilizadores` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
