@@ -192,6 +192,12 @@ video {
     border-bottom-left-radius: 4px;
 }
 
+.system-message {
+    text-align: center;
+    color: #6c757d;
+    margin: 10px 0;
+    font-style: italic;
+}
 
 
     </style>
@@ -320,7 +326,7 @@ video {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
 
-const socket = io('https://b64d-95-92-242-31.ngrok-free.app', {
+const socket = io('localhost', {
     reconnection: true,
     transports: ['websockets', 'polling']
 });

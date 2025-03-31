@@ -52,11 +52,11 @@ echo '<div id="chatHeaderData"
     data-conversation-image="' . htmlspecialchars($image) . '"
     style="display:none;"></div>';
 
-// Get messages
+// Get messages with LEFT JOIN to include system messages
 $stmt = $pdo->prepare("
     SELECT m.*, u.nome_utilizador, u.imagem_perfil
     FROM mensagens m
-    JOIN utilizadores u ON m.id_remetente = u.id_utilizador
+    LEFT JOIN utilizadores u ON m.id_remetente = u.id_utilizador
     WHERE m.id_conversa = ?
     ORDER BY m.enviado_em ASC
 ");
@@ -64,40 +64,53 @@ $stmt->execute([$conversationId]);
 $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($messages as $message) {
-    $isCurrentUser = $message['id_remetente'] == $userId;
-    echo '<div class="mb-3 '.($isCurrentUser ? 'text-end' : 'text-start').'">';
-    echo '<div class="d-flex '.($isCurrentUser ? 'justify-content-end' : 'justify-content-start').'">';
-    if (!$isCurrentUser) {
-        echo '<img src="'.$message['imagem_perfil'].'" alt="'.$message['nome_utilizador'].'" class="profile-img me-2">';
+    if (is_null($message['id_remetente'])) {
+        // System message
+        echo '<div class="text-center text-muted mb-3 system-message">';
+        echo htmlspecialchars($message['conteudo']);
+        echo '</div>';
+        continue;
     }
+
+    $isCurrentUser = $message['id_remetente'] == $userId;
+    echo '<div class="mb-3 ' . ($isCurrentUser ? 'text-end' : 'text-start') . '">';
+    echo '<div class="d-flex ' . ($isCurrentUser ? 'justify-content-end' : 'justify-content-start') . '">';
+    
+    if (!$isCurrentUser) {
+        echo '<img src="' . htmlspecialchars($message['imagem_perfil']) . '" alt="' . htmlspecialchars($message['nome_utilizador']) . '" class="profile-img me-2">';
+    }
+    
     echo '<div>';
     if (!$isCurrentUser) {
-        echo '<div class="fw-bold">'.$message['nome_utilizador'].'</div>';
+        echo '<div class="fw-bold">' . htmlspecialchars($message['nome_utilizador']) . '</div>';
     }
-    // Inside the message loop
+    
     $messageType = $message['tipo_mensagem'] ?? 'text';
     switch ($messageType) {
         case 'image':
-            $content = '<img src="'.$message['conteudo'].'" class="img-fluid" style="max-width: 300px; border-radius: 10px;">';
+            $content = '<img src="' . htmlspecialchars($message['conteudo']) . '" class="img-fluid" style="max-width: 300px; border-radius: 10px;">';
             break;
         case 'video':
-            $content = '<video controls style="max-width: 300px; border-radius: 10px;"><source src="'.$message['conteudo'].'"></video>';
+            $content = '<video controls style="max-width: 300px; border-radius: 10px;"><source src="' . htmlspecialchars($message['conteudo']) . '"></video>';
             break;
         case 'audio':
-            $content = '<audio controls><source src="'.$message['conteudo'].'"></audio>';
+            $content = '<audio controls><source src="' . htmlspecialchars($message['conteudo']) . '"></audio>';
             break;
         default:
             $content = htmlspecialchars($message['conteudo']);
     }
 
-    echo '<div class="p-2 rounded '.($isCurrentUser ? 'user-message' : 'other-message').'">';
-    echo $content; // CORRECTED LINE - use the generated content
+    echo '<div class="p-2 rounded ' . ($isCurrentUser ? 'user-message' : 'other-message') . '">';
+    echo $content;
     echo '</div>';
-    echo '<small class="text-muted">'.date('H:i', strtotime($message['enviado_em'])).'</small>';
+    echo '<small class="text-muted">' . date('H:i', strtotime($message['enviado_em'])) . '</small>';
     echo '</div>';
+    
     if ($isCurrentUser) {
-        echo '<img src="'.$_SESSION['imagem_perfil'].'" alt="You" class="profile-img ms-2">';
+        echo '<img src="' . htmlspecialchars($_SESSION['imagem_perfil']) . '" alt="You" class="profile-img ms-2">';
     }
-    echo '</div>';
+    
+    echo '</div>'; // Close d-flex
+    echo '</div>'; // Close mb-3
 }
 ?>

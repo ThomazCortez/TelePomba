@@ -36,6 +36,20 @@ try {
                           WHERE id_conversa = ? AND id_utilizador = ?");
     $stmt->execute([$conversationId, $userId]);
 
+    // Get user's username
+$stmt = $pdo->prepare("SELECT nome_utilizador FROM utilizadores WHERE id_utilizador = ?");
+$stmt->execute([$userId]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$username = $user['nome_utilizador'];
+
+// Insert system message
+$systemMessage = $username . " saiu da conversa.";
+$stmt = $pdo->prepare("
+    INSERT INTO mensagens (id_conversa, id_remetente, conteudo, tipo_mensagem, enviado_em)
+    VALUES (?, NULL, ?, 'system', NOW())
+");
+$stmt->execute([$conversationId, $systemMessage]);
+
     // Limpar qualquer saída potencial antes de enviar JSON
     ob_end_clean();
     
