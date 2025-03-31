@@ -9,7 +9,7 @@ $DB_CONFIG = [
 $EMAIL_CONFIG = [
     'smtp_host' => 'smtp.gmail.com',
     'smtp_username' => 'telepombadev@gmail.com', 
-    'smtp_password' => 'mlezvxhjlwzjfzlp',
+    'smtp_password' => 'pzwe uegw binq khny',
     'smtp_secure' => 'tls',
     'smtp_port' => 587
 ];
