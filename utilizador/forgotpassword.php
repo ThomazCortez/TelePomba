@@ -169,13 +169,13 @@ if (!isset($_SESSION['csrf_token'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esqueci a minha palavra-passe - TelePomba</title>
+    <title>Esqueci-me da palavra-passe - TelePomba</title>
     <link rel="stylesheet" href="css/forgotpassword.css">
 </head>
 <body>
     <div class="forgot-password-container">
         <div class="forgot-password-header">
-            <h1>Esqueci a minha palavra-passe</h1>
+            <h1>Esqueci-me da palavra-passe</h1>
         </div>
         
         <div class="forgot-password-content">
@@ -191,7 +191,7 @@ if (!isset($_SESSION['csrf_token'])) {
             <?php if (!empty($success)): ?>
                 <div class="message success-message"><?php echo $success; ?></div>
             <?php else: ?>
-                <p>Digite o seu endereço de e-mail abaixo e enviaremos um link para redefinir a sua palavra-passe.</p>
+                <p>Introduza o seu endereço de e-mail abaixo e enviar-lhe-emos um link para repor a palavra-passe.</p>
                 
                 <form method="post">
                     <!-- Token CSRF -->
@@ -202,7 +202,7 @@ if (!isset($_SESSION['csrf_token'])) {
                         <input type="email" id="email" name="email" class="form-control" required>
                     </div>
                     
-                    <button type="submit" class="btn-submit">Enviar Link de Redefinição</button>
+                    <button type="submit" class="btn-submit">Enviar link para reposição</button>
                 </form>
             <?php endif; ?>
             
