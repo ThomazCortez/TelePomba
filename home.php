@@ -219,7 +219,7 @@ video {
                                 <span><?= htmlspecialchars($_SESSION['username']) ?></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="ficheiros/dashboard/dashboard/perfil.php">Definições</a></li>
+                                <li><a class="dropdown-item" href="utilizador/perfil.php">Definições</a></li>
                                 <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
                             </ul>
                         </div>
