@@ -5,47 +5,50 @@ redirectIfNotLoggedIn();
 
 $userId = getCurrentUserId();
 
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$searchTerm = "%$search%";
+
 // Get conversations where the user is a participant
-$stmt = $pdo->prepare("
+$sql = "
     SELECT 
         c.id_conversa, 
         c.nome, 
         c.tipo, 
         c.imagem_perfil,
-        MAX(m.enviado_em) as last_message_time
+        MAX(m.enviado_em) as last_message_time,
+        u.nome_utilizador as other_user_name,
+        u.imagem_perfil as other_user_image
     FROM conversas c
     JOIN participantes_conversa pc ON c.id_conversa = pc.id_conversa
     LEFT JOIN mensagens m ON c.id_conversa = m.id_conversa
+    LEFT JOIN (
+        SELECT pc2.id_conversa, u2.nome_utilizador, u2.imagem_perfil
+        FROM participantes_conversa pc2
+        JOIN utilizadores u2 ON pc2.id_utilizador = u2.id_utilizador
+        WHERE pc2.id_utilizador != ?
+    ) AS u ON c.id_conversa = u.id_conversa AND c.tipo = 'privada'
     WHERE pc.id_utilizador = ?
+    AND (
+        (c.tipo = 'grupo' AND c.nome LIKE ?) 
+        OR 
+        (c.tipo = 'privada' AND u.nome_utilizador LIKE ?)
+    )
     GROUP BY c.id_conversa
     ORDER BY last_message_time DESC
-");
-$stmt->execute([$userId]);
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$userId, $userId, $searchTerm, $searchTerm]);
 $conversations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($conversations as &$conversation) {
-    // Get conversation details
     if ($conversation['tipo'] === 'privada') {
-        // Private chat - get other participant's info
-        $stmt = $pdo->prepare("
-            SELECT 
-                u.nome_utilizador, 
-                u.imagem_perfil
-            FROM utilizadores u
-            JOIN participantes_conversa pc ON u.id_utilizador = pc.id_utilizador
-            WHERE pc.id_conversa = ? AND pc.id_utilizador != ?
-        ");
-        $stmt->execute([$conversation['id_conversa'], $userId]);
-        $otherUser = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if ($otherUser) {
-            $conversation['nome'] = $otherUser['nome_utilizador'];
-            $conversation['imagem_perfil'] = !empty($otherUser['imagem_perfil']) 
-                ? $otherUser['imagem_perfil'] 
-                : 'ficheiros/media/profiles/default_profile_image.jpg';
-        }
+        // Use other user's details from the query
+        $conversation['nome'] = $conversation['other_user_name'];
+        $conversation['imagem_perfil'] = !empty($conversation['other_user_image']) 
+            ? $conversation['other_user_image'] 
+            : 'ficheiros/media/profiles/default_profile_image.jpg';
     } else {
-        // Group chat - use group image or default
         $conversation['imagem_perfil'] = !empty($conversation['imagem_perfil'])
             ? $conversation['imagem_perfil']
             : 'ficheiros/media/groups/default_group_image.jpg';

@@ -347,9 +347,31 @@ const socket = io('localhost', {
         let activeConversationId = null;
         
         socket.emit('authenticate', currentUserId);
+
+        // Add debounce function
+        function debounce(func, timeout = 300) {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            };
+        }
+
+        // Get the search input element
+        const searchInput = document.querySelector('input[placeholder="Pesquise ou crie um novo chat"]');
+
+        // Process search with debounce
+        const processSearch = debounce((searchTerm) => {
+            loadConversations(searchTerm);
+        });
+
+        // Add input event listener
+        searchInput.addEventListener('input', function(e) {
+            processSearch(e.target.value.trim());
+        });
         
-        function loadConversations() {
-            fetch('includes/get_conversations.php')
+        function loadConversations(searchTerm = '') {
+            fetch(`includes/get_conversations.php?search=${encodeURIComponent(searchTerm)}`)
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('conversationsList').innerHTML = html;
