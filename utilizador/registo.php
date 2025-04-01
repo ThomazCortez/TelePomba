@@ -8,9 +8,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nomeUtilizador = htmlspecialchars($_POST["nomeUtilizador"]);
     $email = htmlspecialchars($_POST["email"]);
     $password = $_POST["password"];
-    
+    $confirmPassword = $_POST["confirmPassword"]; // Novo campo
+
     if (strlen($password) < 8) {
         $alertScript = '<script>showAlert("danger", "A palavra-passe deve ter pelo menos 8 caracteres");</script>';
+    } elseif ($password !== $confirmPassword) { // Nova validação
+        $alertScript = '<script>showAlert("danger", "As palavras-passe não coincidem");</script>';
     } else {
         try {
             // Verificar nome de utilizador
@@ -470,8 +473,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-floating mb-4 password-container">
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Palavra-passe" required>
                                 <label for="password">Palavra-passe</label>
-                                <span class="toggle-password" onclick="togglePassword()">
-                                    <i class="fas fa-eye" id="toggleIcon"></i>
+                                <span class="toggle-password" onclick="togglePassword('password')">
+                                    <i class="fas fa-eye" id="toggleIcon_password"></i>
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-4 password-container">
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmar palavra-passe" required>
+                                <label for="confirmPassword">Confirmar palavra-passe</label>
+                                <span class="toggle-password" onclick="togglePassword('confirmPassword')">
+                                    <i class="fas fa-eye" id="toggleIcon_confirmPassword"></i>
                                 </span>
                             </div>
                             
@@ -510,9 +521,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         // Função para alternar a visibilidade da senha
-        function togglePassword() {
-            var passwordInput = document.getElementById("password");
-            var toggleIcon = document.getElementById("toggleIcon");
+        function togglePassword(fieldId) {
+            var passwordInput = document.getElementById(fieldId);
+            var toggleIcon = document.getElementById('toggleIcon_' + fieldId);
             
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
