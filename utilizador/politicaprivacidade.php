@@ -6,6 +6,8 @@
     <title>Política de Privacidade - Telepomba</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <style>
@@ -87,7 +89,6 @@
             color: white !important;
         }
 
-        /* CSS específico da página */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-color);
@@ -120,6 +121,13 @@
             margin-bottom: 15px;
         }
 
+        /* Animações */
+        .animate-entrance {
+            opacity: 0;
+            animation-duration: 1s;
+            animation-fill-mode: both;
+        }
+
         @media (max-width: 768px) {
             .footer-content {
                 flex-direction: column;
@@ -132,8 +140,7 @@
     </style>
 </head>
 <body>
-    <!-- Header igual ao index.php -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/TelePomba/index.php">
                 <i class="fas fa-dove me-2"></i>
@@ -145,21 +152,25 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/TelePomba/index.php#home">Início</a>
-                    </li>
-                    <!--<li class="nav-item">
-                        <a class="nav-link" href="/TelePomba/index.php#about">Sobre</a>
+                        <a class="nav-link" href="#home">Início</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/TelePomba/index.php#features">Recursos</a>
-                    </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-light text-primary py-1 px-3 ms-2" 
-                           href="/TelePomba/ficheiros/login/login.php">Iniciar sessão</a>
+                        <a class="nav-link" href="#about">Sobre</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light py-1 px-3 ms-2" 
-                           href="/TelePomba/ficheiros/login/registo.php">Criar conta</a>
+                        <a class="nav-link" href="#features">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Depoimentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">Equipa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-light text-primary py-1 px-3 ms-2" href="/TelePomba/utilizador/login.php">Iniciar sessão</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light py-1 px-3 ms-2" href="/TelePomba/utilizador/registo.php">Criar conta</a>
                     </li>
                 </ul>
             </div>
@@ -167,28 +178,78 @@
     </nav>
 
     <main class="content-container">
-        <h1>Política de Privacidade</h1>
+        <h1 class="animate__animated animate__fadeInDown">Política de Privacidade</h1>
         
-        <h2>1. Recolha de Informações</h2>
-        <p>Recolhemos informações pessoais quando se regista no nosso serviço, incluindo nome, endereço de e-mail e dados de utilização. Estas informações são utilizadas exclusivamente para fornecer e melhorar os nossos serviços.</p>
+        <div class="animate__animated animate__fadeInLeft animate-entrance">
+            <h2>1. Recolha de Informações</h2>
+            <p>Recolhemos informações pessoais quando se regista no nosso serviço, incluindo nome e endereço de email. Estas informações são utilizadas exclusivamente para fornecer e melhorar os nossos serviços.</p>
+        </div>
 
-        <h2>2. Utilização dos Dados</h2>
-        <p>Os seus dados são utilizados para personalizar a sua experiência, processar transações e enviar comunicações relevantes. Nunca partilhamos as suas informações com terceiros sem o seu consentimento explícito.</p>
+        <div class="animate__animated animate__fadeInRight animate-entrance">
+            <h2>2. Segurança</h2>
+            <p>Implementamos medidas de segurança físicas e eletrónicas para proteger as suas informações, incluindo sistemas de armazenamento de informações seguros.</p>
+        </div>
 
-        <h2>3. Cookies</h2>
-        <p>Utilizamos cookies para melhorar a navegação e personalizar conteúdos. Pode gerir as suas preferências de cookies através das definições do seu navegador.</p>
-
-        <h2>4. Segurança</h2>
-        <p>Implementamos medidas de segurança físicas e eletrónicas para proteger as suas informações, incluindo encriptação SSL e sistemas de armazenamento seguros.</p>
-
-        <h2>5. Alterações</h2>
-        <p>Esta política poderá ser atualizada periodicamente. Quaisquer alterações significativas serão comunicadas através dos nossos canais oficiais.</p>
+        <div class="animate__animated animate__fadeInLeft animate-entrance">
+            <h2>3. Alterações</h2>
+            <p>Reservamo-nos o direito de modificar estes termos a qualquer momento. Alterações serão comunicadas com 30 dias de antecedência.</p>
+        </div>
     </main>
 
-    <!-- Footer -->
-    <?php include 'includes/footer.php'; ?>
-    
+    <!-- Footer com animação -->
+    <footer class="animate__animated animate__fadeInUp">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TelePomba</h3>
+                <p>Conectando pombas e telecomunicações desde 2025.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📧 telepombadev@gmail.com</p>
+                <p>📞 (+351) 939 658 201</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Redes Sociais</h4>
+                <div class="social-icons">
+                    <a href="https://x.com/TelePomba"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/telepomba?igsh=c3Nva3pycWE4NWw1"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.link/5nly84"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 TelePomba - Todos os direitos reservados.</p>
+            <div class="legal-links">
+                <a href="/TelePomba/utilizador/politicaprivacidade.php">Política de Privacidade</a>
+                <a href="/TelePomba/utilizador/termosservico.php">Termos de Serviço</a>
+            </div>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS com Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animação no scroll
+        document.addEventListener("DOMContentLoaded", function(){
+            const animatedElements = document.querySelectorAll('.animate-entrance');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.classList.add(entry.target.dataset.animation);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                observer.observe(element);
+            });
+        });
+    </script>
 </body>
 </html>
