@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 30-Mar-2025 às 23:29
+-- Tempo de geração: 01-Abr-2025 às 00:55
 -- Versão do servidor: 8.3.0
 -- versão do PHP: 8.2.18
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `conversas` (
   `imagem_grupo` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_conversa`),
   KEY `criado_por` (`criado_por`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `conversas`
@@ -55,7 +55,8 @@ INSERT INTO `conversas` (`id_conversa`, `nome`, `tipo`, `criado_por`, `criado_em
 (9, 'Test', 'grupo', 5, '2025-03-30 18:55:38', 'ficheiros/media/index/default.png', NULL),
 (10, 'pluh', 'grupo', 5, '2025-03-30 19:42:18', 'ficheiros/media/index/default.png', NULL),
 (11, 'Skibidi', 'grupo', 5, '2025-03-30 20:01:35', 'ficheiros/media/groups/67e9a31f1de9d_gfoyUJWR_400x400.jpg', NULL),
-(12, 'Coding', 'grupo', 5, '2025-03-30 20:39:07', 'ficheiros/media/groups/67e9abebc22e8_coding-background-9izlympnd0ovmpli.jpg', NULL);
+(12, 'Coding', 'grupo', 5, '2025-03-30 20:39:07', 'ficheiros/media/groups/67e9abebc22e8_coding-background-9izlympnd0ovmpli.jpg', NULL),
+(13, 'Group', 'grupo', 5, '2025-03-31 18:53:01', 'ficheiros/media/groups/default_group_image.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -74,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `mensagens` (
   PRIMARY KEY (`id_mensagem`),
   KEY `id_conversa` (`id_conversa`),
   KEY `id_remetente` (`id_remetente`)
-) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `mensagens`
@@ -264,7 +265,21 @@ INSERT INTO `mensagens` (`id_mensagem`, `id_conversa`, `id_remetente`, `conteudo
 (183, 11, NULL, '🚪 Thomaz123 saiu da conversa', '2025-03-30 20:34:30', 'system'),
 (184, 11, NULL, '🚪 Cortez123 saiu da conversa', '2025-03-30 20:35:20', 'system'),
 (185, 12, 5, 'we love coding!', '2025-03-30 20:39:18', 'text'),
-(186, 6, 5, '💀💀💀💀💀', '2025-03-30 23:00:47', 'text');
+(186, 6, 5, '💀💀💀💀💀', '2025-03-30 23:00:47', 'text'),
+(187, 6, 5, 'yaya', '2025-03-31 18:45:03', 'text'),
+(188, 6, 5, 'hmm', '2025-03-31 18:52:38', 'text'),
+(189, 13, 5, 'abc', '2025-03-31 19:02:23', 'text'),
+(190, 13, 5, 'def', '2025-03-31 19:02:24', 'text'),
+(191, 13, 5, 'gasd', '2025-03-31 19:02:25', 'text'),
+(192, 13, NULL, 'Thomaz123 saiu da conversa.', '2025-03-31 19:02:29', 'system'),
+(193, 13, 7, 'asd', '2025-03-31 19:03:41', 'text'),
+(194, 13, 7, 'WHY', '2025-03-31 19:03:43', 'text'),
+(195, 13, 7, 'AHHHHHHHHHHHH', '2025-03-31 19:03:45', 'text'),
+(196, 13, 7, ':(((((((((((((', '2025-03-31 19:03:47', 'text'),
+(197, 13, NULL, 'Faria123 saiu da conversa.', '2025-03-31 19:03:51', 'system'),
+(198, 5, 7, 'pluh', '2025-03-31 19:06:46', 'text'),
+(199, 5, NULL, 'Faria123 saiu da conversa.', '2025-03-31 19:06:54', 'system'),
+(200, 6, 5, 'heyooo', '2025-04-01 00:22:57', 'text');
 
 -- --------------------------------------------------------
 
@@ -281,18 +296,16 @@ CREATE TABLE IF NOT EXISTS `participantes_conversa` (
   PRIMARY KEY (`id_participante`),
   KEY `id_conversa` (`id_conversa`),
   KEY `id_utilizador` (`id_utilizador`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `participantes_conversa`
 --
 
 INSERT INTO `participantes_conversa` (`id_participante`, `id_conversa`, `id_utilizador`, `entrou_em`) VALUES
-(11, 5, 7, '2025-03-27 23:32:07'),
 (12, 5, 10, '2025-03-27 23:32:07'),
 (13, 6, 5, '2025-03-28 16:38:59'),
 (14, 6, 6, '2025-03-28 16:38:59'),
-(23, 12, 5, '2025-03-30 20:39:07'),
 (24, 12, 6, '2025-03-30 20:39:07');
 
 -- --------------------------------------------------------
@@ -312,29 +325,7 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   KEY `idx_email` (`email`),
   KEY `idx_token` (`token`),
   KEY `idx_expiration` (`expires_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `password_resets`
---
-
-INSERT INTO `password_resets` (`id`, `email`, `token`, `expires_at`, `created_at`) VALUES
-(1, 'thomazbarrago@gmail.com', 'd554da3e2e1715d1b549d7a27ac457d63dc3de9f98ee90ce152206a2e7530409', '2025-03-31 00:19:08', '2025-03-30 23:19:08');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `sessions`
---
-
-DROP TABLE IF EXISTS `sessions`;
-CREATE TABLE IF NOT EXISTS `sessions` (
-  `session_id` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_id` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`session_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -364,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `utilizadores` (
 --
 
 INSERT INTO `utilizadores` (`id_utilizador`, `nome_utilizador`, `palavra_passe`, `email`, `imagem_perfil`, `descricao`, `estado`, `ultima_atividade`, `criado_em`, `atualizado_em`) VALUES
-(5, 'Thomaz123', '$2y$10$f59.KOEoneJ3xqYuJaPEH.7XjdUhGjW3m8.d.IdSL7gXaVukOOzj6', 'thomazbarrago@gmail.com', 'ficheiros/media/profiles/ultrakill.jpg', NULL, 'offline', '2025-03-27 08:54:46', '2025-03-25 20:51:30', '2025-03-25 20:51:30'),
+(5, 'Thomaz123', '$2y$10$7uREzJO4RmXa6A7a3tlPe.r.PKAA.3JnDSDVjWuiwBL3ITmbGfsFO', 'thomazbarrago@gmail.com', 'ficheiros/media/profiles/profile_67eb31624414d.jpg', 'Heya!', 'online', '2025-04-01 00:24:48', '2025-03-25 20:51:30', '2025-04-01 00:24:48'),
 (6, 'Cortez123', '$2y$10$HTwHwJSFrvaSqx/PI70LBO55py4GvWoF5hkvrLY7STubYWVkESfQe', 'cortez123@gmail.com', 'ficheiros/media/profiles/67e317969bacf.png', NULL, 'offline', '2025-03-25 20:52:38', '2025-03-25 20:52:38', '2025-03-25 20:52:38'),
 (7, 'Faria123', '$2y$10$h7uzcOJzZYGlgSXNL/5Z3.8w7b3VG3Vhs8fBUR2.JshjIJWa.yyzO', 'Faria123@gmail.com', 'ficheiros/media/index/default.png', NULL, 'offline', '2025-03-26 15:03:00', '2025-03-26 15:03:00', '2025-03-26 15:03:00'),
 (10, 'Barrago123', '$2y$10$8wKuGosMbam/XXPoBgk21.mcI8XiOoeDCfWmY8Ti3drBDHULQpAm2', 'barrago123@gmail.com', 'ficheiros/media/index/default.png', NULL, 'offline', '2025-03-26 15:38:16', '2025-03-26 15:38:16', '2025-03-26 15:38:16'),
