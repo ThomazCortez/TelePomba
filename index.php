@@ -606,7 +606,7 @@
                 <div class="card team-card text-center p-3">
                     <img src="ficheiros/media/img/lourenco.png" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Lourenço Mestre</h5>
-                    <p class="text-primary">Footer e Base de Dados</p>
+                    <p class="text-primary">Footer, Política de Privacidade e Termos de Serviço</p>
                 </div>
             </div>
             
@@ -624,7 +624,7 @@
                 <div class="card team-card text-center p-3">
                     <img src="ficheiros/media/img/yat.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Yathaarth Handa</h5>
-                    <p class="text-primary">Index</p>
+                    <p class="text-primary">Gestor de Redes Sociais</p>
                 </div>
             </div>
             
@@ -642,7 +642,7 @@
                 <div class="card team-card text-center p-3">
                     <img src="ficheiros/media/img/mega.jpg" class="team-img mb-3" alt="Developer" width="150" height="150">
                     <h5>Gonçalo Dionísio</h5>
-                    <p class="text-primary">Header e Navbar</p>
+                    <p class="text-primary">Forgot e Reset Password</p>
                 </div>
             </div>
             
