@@ -477,7 +477,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             
                             <div class="mb-4 form-check">
                                 <input type="checkbox" class="form-check-input" id="termsCheck" required>
-                                <label class="form-check-label" for="termsCheck">Concordo com os <a href="#" class="login-link">Termos e Condições</a></label>
+                                <label class="form-check-label" for="termsCheck">Concordo com os <a href="../termosservico.php" class="login-link">Termos de Serviço</a></label>
                             </div>
                             
                             <button type="submit" class="btn btn-primary py-3 animate__animated animate__pulse">Criar conta</button>
