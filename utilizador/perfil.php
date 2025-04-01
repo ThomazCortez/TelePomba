@@ -232,6 +232,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: var(--background-light);
             color: var(--text-primary);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('images/green.png'); /* Update with your image path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
         
         .settings-container {
@@ -241,6 +246,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 12px;
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
             overflow: hidden;
+            padding: 0; /* Add this to remove any potential padding */
         }
         
         .settings-header {
@@ -248,6 +254,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: white;
             padding: 1.5rem;
             position: relative;
+            width: 100%; /* Ensure full width */
+            margin: 0; /* Remove any margin */
+            border-top-left-radius: 12px; /* Match container's border radius */
+            border-top-right-radius: 12px;
         }
         
         .settings-content {
