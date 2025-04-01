@@ -496,6 +496,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <p class="text-center mt-4">
                             Já tem uma conta? <a href="login.php" class="login-link">Iniciar sessão</a>
                         </p>
+                        <p class="text-center">
+                            Clique <a href="../index.php" class="login-link">aqui</a> para voltar à página inicial.
+                        </p>
                     </div>
                 </div>
             </div>

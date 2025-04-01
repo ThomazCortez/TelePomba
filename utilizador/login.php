@@ -470,6 +470,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <p class="text-center mt-4">
                             Não tem uma conta? <a href="registo.php" class="login-link">Criar conta</a>
                         </p>
+                        <p class="text-center">
+                            Clique <a href="../index.php" class="login-link">aqui</a> para voltar à página inicial.
+                        </p>
                     </div>
                 </div>
             </div>
